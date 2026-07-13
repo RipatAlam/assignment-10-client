@@ -1,6 +1,6 @@
 import { BookOpen, Users, Globe, Star } from "lucide-react";
 
-export default function StatsSection() {
+export default function PercentagePage() {
   const stats = [
     {
       icon: BookOpen,
@@ -29,7 +29,7 @@ export default function StatsSection() {
   ];
 
   return (
-    <section className="-mt-10 relative z-20 max-w-6xl mx-auto px-6">
+    <section className="relative z-20 max-w-7xl mx-auto px-6 py-20 sm:px-8 lg:px-16 w-full bg-[#050816]">
       <div className="grid grid-cols-2 lg:grid-cols-4 rounded-2xl border border-white/10 bg-[#0B1220]/90 backdrop-blur-xl overflow-hidden shadow-xl">
 
         {stats.map((item, index) => {
