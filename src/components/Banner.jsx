@@ -1,107 +1,153 @@
-"use client";
+import Image from "next/image";
+import { Brain, Briefcase, Heart, Activity, Wallet } from "lucide-react";
 
-import Link from "next/link";
-import { Clock } from "lucide-react";
-import { useEffect, useState } from "react";
-
-export default function BannerPage({ isLoggedIn }) {
-  const [currentTime, setCurrentTime] = useState("");
-  const [currentDate, setCurrentDate] = useState("");
-
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      
-      // Live Time (HH:MM:SS)
-      const timeString = now.toLocaleTimeString('en-US', { 
-        hour: '2-digit', 
-        minute: '2-digit', 
-        second: '2-digit',
-        hour12: true 
-      });
-      setCurrentTime(timeString);
-
-      // Date
-      const dateString = now.toLocaleDateString('en-US', { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
-      });
-      setCurrentDate(dateString);
-    };
-
-    updateTime(); // Initial call
-    const interval = setInterval(updateTime, 1000); // Update every second
-
-    return () => clearInterval(interval);
-  }, []);
-
+export default function BannerPage() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-[#f8f9fa] overflow-hidden">
-      {/* Background subtle pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:40px_40px] opacity-50"></div>
+    <section
+      className="relative max-w-7xl mx-auto bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: "url('/Images/BannerImage.jpeg')",
+        backgroundSize: "110% 100%",
+        backgroundPosition: "center",
+      }}
+    >
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/55"></div>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
-        {/* Live Time Badge */}
-        <div className="inline-flex items-center gap-3 mb-8">
-          <div className="bg-white border border-gray-300 rounded-lg px-5 py-3 shadow-sm flex items-center gap-3 text-sm font-medium">
-            <div className="flex items-center gap-2">
-              <Clock size={18} className="text-gray-600" />
-              <span className="font-mono text-lg tracking-widest font-semibold text-gray-800">
-                {currentTime}
-              </span>
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 sm:px-8 lg:px-16">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Left Side */}
+          <div>
+            <span className="inline-block px-4 py-2 rounded-full bg-white/10 text-white text-sm mb-6 backdrop-blur">
+              ✨ Grow. Learn. Inspire.
+            </span>
+
+            <h1 className="text-6xl font-bold leading-tight text-white">
+              Real Lessons.
+              <br />
+              Real <span className="text-blue-400">Impact.</span>
+            </h1>
+
+            <p className="mt-6 text-gray-300 text-lg max-w-lg">
+              Discover life-changing lessons from real people. Apply them in
+              your life and become a better you.
+            </p>
+
+            <div className="flex gap-4 mt-10">
+              <button className="bg-blue-600 hover:bg-blue-700 transition px-8 py-4 rounded-xl text-white font-semibold">
+                Explore Lessons →
+              </button>
+
+              <button className="border border-white/30 hover:bg-white/10 transition px-8 py-4 rounded-xl text-white">
+                Share Your Lesson
+              </button>
+            </div>
+
+            {/* Avatar Section */}
+
+            <div className="flex items-center gap-4 mt-10">
+              <div className="flex -space-x-3">
+                <img
+                  src="https://i.pravatar.cc/50?img=1"
+                  className="w-10 h-10 rounded-full border-2 border-white"
+                />
+                <img
+                  src="https://i.pravatar.cc/50?img=2"
+                  className="w-10 h-10 rounded-full border-2 border-white"
+                />
+                <img
+                  src="https://i.pravatar.cc/50?img=3"
+                  className="w-10 h-10 rounded-full border-2 border-white"
+                />
+                <img
+                  src="https://i.pravatar.cc/50?img=4"
+                  className="w-10 h-10 rounded-full border-2 border-white"
+                />
+              </div>
+
+              <p className="text-gray-300">
+                Trusted by{" "}
+                <span className="text-white font-semibold">20,000+</span>
+                <br />
+                learners worldwide
+              </p>
             </div>
           </div>
-        </div>
 
-        {/* Date */}
-        <div className="text-gray-500 mb-6 text-lg">
-          {currentDate}
-        </div>
+          {/* Right Side */}
+          <div className="relative h-[650px] hidden lg:flex items-center justify-center">
+            {/* Circle */}
+            <div className="absolute w-[520px] h-[520px] rounded-full border border-purple-400/30"></div>
 
-        {/* Main Title */}
-        <h1 className="text-7xl md:text-8xl font-bold text-gray-900 tracking-tighter leading-none mb-6">
-          DIGITAL<br />LIFE LESSONS
-        </h1>
+            {/* Top */}
+            <Card
+              title="Mindset"
+              lessons="12.4K Lessons"
+              icon={Brain}
+              className="top-6 left-1/2 -translate-x-1/2 animate-float"
+            />
 
-        {/* Subtitle */}
-        <p className="text-2xl md:text-3xl text-gray-600 font-light max-w-2xl mx-auto mb-12">
-          Preserve your wisdom.<br />
-          Share your growth.<br />
-          Inspire the world.
-        </p>
+            {/* Left */}
+            <Card
+              title="Relationships"
+              lessons="8.7K Lessons"
+              icon={Heart}
+              className="top-40 left-[-50px] animate-float2"
+            />
 
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Link
-            href={isLoggedIn ? "/dashboard/add-lesson" : "/security/signup"}
-            className="bg-gray-900 hover:bg-black text-white px-10 py-4 rounded-2xl text-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl"
-          >
-            {isLoggedIn ? "Write Your Lesson" : "Join Free Today"}
-          </Link>
+            {/* Bottom Left */}
+            <Card
+              title="Health"
+              lessons="6.2K Lessons"
+              icon={Activity}
+              className="bottom-28 left-2 animate-float"
+            />
 
-          <Link
-            href="dashboard/public-lessons"
-            className="border border-gray-400 hover:border-gray-600 text-gray-700 px-10 py-4 rounded-2xl text-lg font-medium transition-all"
-          >
-            Explore Public Lessons
-          </Link>
-        </div>
+            {/* Right */}
+            <Card
+              title="Career"
+              lessons="9.3K Lessons"
+              icon={Briefcase}
+              className="top-40 right-[-50px] animate-float2"
+            />
 
-        {/* Bottom Tag */}
-        <div className="mt-20 flex justify-center">
-          <div className="flex items-center gap-2 text-sm text-gray-400">
-            <div className="w-6 h-[2px] bg-gray-300"></div>
-            POWERED BY WISDOM
-            <div className="w-6 h-[2px] bg-gray-300"></div>
+            {/* Bottom Right */}
+            <Card
+              title="Finance"
+              lessons="7.7K Lessons"
+              icon={Wallet}
+              className="bottom-28 right-2 animate-float"
+            />
           </div>
         </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-gray-300 text-sm flex flex-col items-center animate-bounce">
-        ↓ Scroll to explore
       </div>
     </section>
   );
 }
+
+function Card({ title, lessons, icon: Icon, className }) {
+  return (
+    <div
+      className={`absolute ${className}
+      w-48 rounded-2xl
+      bg-white/10 backdrop-blur-xl
+      border border-white/20
+      px-5 py-4
+      shadow-[0_0_30px_rgba(147,51,234,0.35)]
+      transition-all duration-300
+      hover:scale-110`}
+    >
+      <div className="flex items-center gap-3">
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-500/20">
+          <Icon className="w-5 h-5 text-blue-400" />
+        </div>
+
+        <div>
+          <h3 className="text-white font-semibold">{title}</h3>
+          <p className="text-gray-300 text-sm">{lessons}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+

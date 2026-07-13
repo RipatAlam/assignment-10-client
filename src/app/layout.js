@@ -21,12 +21,10 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased bg-[#050816]`}
     >
       <body className="min-h-full flex flex-col">
-        <main>
-          {children}
-        </main>
+        <main>{children}</main>
         <ToastContainer />
       </body>
     </html>
