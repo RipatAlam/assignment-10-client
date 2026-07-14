@@ -4,17 +4,17 @@ import { Brain, Briefcase, Heart, Activity, Wallet } from "lucide-react";
 export default function BannerPage() {
   return (
     <section
-      className="relative max-w-7xl mx-auto bg-cover bg-center bg-no-repeat"
+      className="relative max-w-7xl mx-auto h-[700px] bg-no-repeat overflow-hidden"
       style={{
-        backgroundImage: "url('/Images/BannerImage.jpeg')",
-        backgroundSize: "110% 100%",
-        backgroundPosition: "center",
+        backgroundImage: "url('/Images/BannerImage.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "73% center",
       }}
     >
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black/55"></div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 sm:px-8 lg:px-16">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 sm:px-8 md:px-60 lg:px-25 w-full h-full flex items-center">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left Side */}
           <div>
@@ -77,7 +77,7 @@ export default function BannerPage() {
           {/* Right Side */}
           <div className="relative h-[650px] hidden lg:flex items-center justify-center">
             {/* Circle */}
-            <div className="absolute w-[520px] h-[520px] rounded-full border border-purple-400/30"></div>
+            <div className="absolute w-[550px] h-[550px] rounded-full border border-purple-400/30"></div>
 
             {/* Top */}
             <Card
@@ -92,7 +92,7 @@ export default function BannerPage() {
               title="Relationships"
               lessons="8.7K Lessons"
               icon={Heart}
-              className="top-40 left-[-50px] animate-float2"
+              className="top-45 left-[-50px] animate-float2"
             />
 
             {/* Bottom Left */}
@@ -100,7 +100,7 @@ export default function BannerPage() {
               title="Health"
               lessons="6.2K Lessons"
               icon={Activity}
-              className="bottom-28 left-2 animate-float"
+              className="bottom-30 left-1 animate-float"
             />
 
             {/* Right */}
@@ -108,7 +108,7 @@ export default function BannerPage() {
               title="Career"
               lessons="9.3K Lessons"
               icon={Briefcase}
-              className="top-40 right-[-50px] animate-float2"
+              className="top-45 right-[-50px] animate-float2"
             />
 
             {/* Bottom Right */}
@@ -116,7 +116,7 @@ export default function BannerPage() {
               title="Finance"
               lessons="7.7K Lessons"
               icon={Wallet}
-              className="bottom-28 right-2 animate-float"
+              className="bottom-30 right-1 animate-float"
             />
           </div>
         </div>
@@ -150,4 +150,3 @@ function Card({ title, lessons, icon: Icon, className }) {
     </div>
   );
 }
-

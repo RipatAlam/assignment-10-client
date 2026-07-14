@@ -46,38 +46,43 @@ export default function Navbar({ user, plan = "free" }) {
   };
 
   return (
-    <header className="w-full border-b bg-white shadow-sm relative z-50">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
+    <header className="w-full relative z-50">
+      <div className="max-w-7xl mx-auto border-b border-[#0d1728] bg-[#07111f] shadow-lg">
+        <div className="flex items-center justify-between py-4 px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="bg-gray-900 rounded-full flex items-center justify-center text-white text-2xl transition-transform group-hover:scale-110">
+          <div className="bg-[#2563eb] rounded-full p-[2px] transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-blue-500/30">
             <Image
               src="/Images/Banner05.jpg"
-              alt="Digital Life Lessons Logo"
-              className="rounded-full object-cover w-9 h-9"
+              alt="LifeLore Logo"
+              className="rounded-full object-cover w-14 h-14"
               width={40}
               height={40}
             />
           </div>
-          <div>
-            <span className="text-2xl font-bold tracking-tight text-gray-900">
-              DIGITAL LIFE LESSONS
-            </span>
-            <p className="text-[10px] text-gray-400 -mt-1 tracking-widest">
-              WISDOM PRESERVED
+          <div className="leading-tight">
+            <h1 className="text-3xl font-extrabold tracking-wide text-white">
+              Life<span className="text-[#2563eb]">Lore</span>
+            </h1>
+
+            <p className="text-xs text-slate-400 tracking-[0.35em] uppercase mt-1">
+              Stories • Wisdom • Legacy
             </p>
           </div>
         </Link>
 
         {/* Desktop Menu */}
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-          <Link href="/" className="hover:text-blue-600">
+        <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
+          <Link
+            href="/"
+            className="text-slate-300 hover:text-[#2563eb] transition-colors duration-300"
+          >
             Home
           </Link>
 
           <Link
             href="/dashboard/public-lessons"
-            className="hover:text-blue-600"
+            className="text-slate-300 hover:text-[#2563eb] transition-colors duration-300"
           >
             Public Lessons
           </Link>
@@ -87,14 +92,14 @@ export default function Navbar({ user, plan = "free" }) {
             <>
               <Link
                 href="/dashboard/add-lesson"
-                className="hover:text-blue-600 flex items-center gap-1"
+                className="text-slate-300 hover:text-[#2563eb] transition-colors duration-300 flex items-center gap-2"
               >
                 Add Lesson
               </Link>
 
               <Link
                 href="/dashboard/my-lessons"
-                className="hover:text-blue-600"
+                className="text-slate-300 hover:text-[#2563eb] transition-colors duration-300"
               >
                 My Lessons
               </Link>
@@ -104,7 +109,7 @@ export default function Navbar({ user, plan = "free" }) {
           {isLoggedIn && plan === "free" && (
             <Link
               href="/pricing"
-              className="text-orange-500 font-semibold hover:text-orange-600"
+              className="text-[#2563eb] font-semibold hover:text-blue-400 transition-colors"
             >
               Pricing / Upgrade
             </Link>
@@ -113,10 +118,15 @@ export default function Navbar({ user, plan = "free" }) {
           {/* AUTH */}
           {!isLoggedIn ? (
             <div className="flex items-center gap-3">
-              <Link href="/security/login">Login</Link>
+              <Link
+                href="/security/login"
+                className="text-slate-300 hover:text-[#2563eb] transition-colors"
+              >
+                Login
+              </Link>
               <Link
                 href="/security/signup"
-                className="bg-gray-900 text-white px-3 py-1 rounded-md"
+                className="bg-[#2563eb] hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-blue-500/30"
               >
                 Signup
               </Link>
@@ -136,20 +146,20 @@ export default function Navbar({ user, plan = "free" }) {
                   alt="avatar"
                   width={36}
                   height={36}
-                  className="rounded-full border"
+                  className="rounded-full border-2 border-[#2563eb]"
                 />
               </button>
 
               {open && (
-                <div className="absolute right-0 mt-2 w-52 bg-white border rounded-lg shadow-lg overflow-hidden">
-                  <div className="px-4 py-2 border-b text-sm font-semibold">
+                <div className="absolute right-0 mt-3 w-56 bg-[#07111f] border border-[#0d1728] rounded-xl shadow-2xl overflow-hidden">
+                  <div className="px-4 py-3 border-b border-[#0d1728] text-sm font-semibold text-white">
                     {session?.user?.name || "User"}
                   </div>
 
                   <Link
                     href="dashboardfile/profile"
                     onClick={() => setOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"
+                    className="flex items-center gap-2 px-4 py-3 text-slate-300 hover:bg-[#0d1728] hover:text-[#2563eb] transition-all duration-300"
                   >
                     <User size={16} /> Profile
                   </Link>
@@ -159,7 +169,7 @@ export default function Navbar({ user, plan = "free" }) {
                     <div>
                       <button
                         onClick={() => setDashboardOpen(!dashboardOpen)}
-                        className="px-3 py-2 rounded-lg hover:bg-gray-100 flex items-center justify-between w-full"
+                        className="px-4 py-3 rounded-lg text-slate-300 hover:bg-[#0d1728] hover:text-[#2563eb] flex items-center justify-between w-full transition-all duration-300"
                       >
                         <span className="flex items-center gap-2">
                           <LayoutDashboard size={16} /> Dashboard
@@ -173,7 +183,7 @@ export default function Navbar({ user, plan = "free" }) {
                           <Link
                             onClick={closeMobile}
                             href="/dashboardfile/user"
-                            className="px-3 py-2 rounded-lg hover:bg-gray-100 text-sm"
+                            className="px-3 py-2 rounded-lg text-slate-300 hover:bg-[#0d1728] hover:text-[#2563eb] text-sm transition-all"
                           >
                             👤 User
                           </Link>
@@ -184,7 +194,7 @@ export default function Navbar({ user, plan = "free" }) {
 
                   <button
                     onClick={handleLogout}
-                    className="flex items-center gap-2 w-full px-4 py-2 text-red-500 hover:bg-gray-100"
+                    className="flex items-center gap-2 w-full px-4 py-3 text-red-400 hover:bg-red-500/10 transition-all"
                   >
                     <LogOut size={16} /> Log out
                   </button>
@@ -212,23 +222,25 @@ export default function Navbar({ user, plan = "free" }) {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="absolute top-0 right-0 w-72 h-full bg-white shadow-xl p-5 flex flex-col gap-4"
+            className="absolute top-0 right-0 w-72 h-full bg-[#07111f] shadow-2xl border-l border-[#0d1728] p-6 flex flex-col gap-5"
           >
             {/* Header */}
-            <div className="flex items-center justify-between border-b pb-3">
-              <h2 className="font-semibold text-lg">Menu</h2>
-              <button onClick={closeMobile}>
+            <div className="flex items-center justify-between border-b border-[#0d1728] pb-4">
+              <h2 className="font-semibold text-lg text-white">Menu</h2>
+              <button
+                onClick={closeMobile}
+                className="text-slate-300 hover:text-[#2563eb]"
+              >
                 <X />
               </button>
             </div>
 
             {/* Links */}
-            {/* Links */}
             <div className="flex flex-col gap-3 text-sm font-medium">
               <Link
                 onClick={closeMobile}
                 href="/"
-                className="px-3 py-2 rounded-lg hover:bg-gray-100"
+                className="px-3 py-2 rounded-lg text-slate-300 hover:bg-[#0d1728] hover:text-[#2563eb] transition-all duration-300"
               >
                 Home
               </Link>
@@ -293,7 +305,7 @@ export default function Navbar({ user, plan = "free" }) {
                 <Link
                   onClick={closeMobile}
                   href="/pricing"
-                  className="px-3 py-2 rounded-lg bg-orange-50 text-orange-600 font-semibold"
+                  className="px-3 py-2 rounded-lg bg-[#2563eb] text-white font-semibold hover:bg-blue-700 transition-all"
                 >
                   ⚡ Pricing / Upgrade
                 </Link>
@@ -307,7 +319,7 @@ export default function Navbar({ user, plan = "free" }) {
                   <Link
                     onClick={closeMobile}
                     href="/security/login"
-                    className="w-full text-center px-3 py-2 rounded-lg border hover:bg-gray-100"
+                    className="w-full text-center px-3 py-2 rounded-lg border border-[#0d1728] text-slate-300 hover:bg-[#0d1728] transition-all"
                   >
                     Login
                   </Link>
@@ -315,14 +327,14 @@ export default function Navbar({ user, plan = "free" }) {
                   <Link
                     onClick={closeMobile}
                     href="/security/signup"
-                    className="w-full text-center px-3 py-2 rounded-lg bg-gray-900 text-white"
+                    className="w-full text-center px-3 py-2 rounded-lg bg-[#2563eb] text-white hover:bg-blue-700 transition-all"
                   >
                     Signup
                   </Link>
                 </div>
               ) : (
                 <div className="flex flex-col gap-2">
-                  <div className="flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-lg">
+                  <div className="flex items-center gap-3 px-3 py-3 bg-[#050b18] border border-[#0d1728] rounded-xl">
                     <Image
                       src={
                         session?.user?.image?.trim()
@@ -335,24 +347,24 @@ export default function Navbar({ user, plan = "free" }) {
                       className="rounded-full"
                     />
                     <div>
-                      <p className="text-sm font-semibold">
+                      <p className="text-sm font-semibold text-white">
                         {session.user.name}
                       </p>
-                      <p className="text-xs text-gray-500">Logged in</p>
+                      <p className="text-xs text-slate-400">Logged in</p>
                     </div>
                   </div>
 
                   <Link
                     onClick={closeMobile}
                     href="/profile"
-                    className="px-3 py-2 rounded-lg hover:bg-gray-100 flex items-center gap-2"
+                    className="px-3 py-2 rounded-lg text-slate-300 hover:bg-[#0d1728] hover:text-[#2563eb] flex items-center gap-2 transition-all"
                   >
                     <User size={16} /> Profile
                   </Link>
 
                   <button
                     onClick={handleLogout}
-                    className="px-3 py-2 rounded-lg text-red-500 hover:bg-red-50 flex items-center gap-2"
+                    className="px-3 py-2 rounded-lg text-red-400 hover:bg-red-500/10 flex items-center gap-2 transition-all"
                   >
                     <LogOut size={16} /> Logout
                   </button>
@@ -362,6 +374,7 @@ export default function Navbar({ user, plan = "free" }) {
           </div>
         </div>
       )}
+      </div>
     </header>
   );
 }
