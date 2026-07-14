@@ -35,8 +35,8 @@ const benefitsData = [
 
 export default function LifeBenefits() {
   return (
-    <section className="py-28 bg-gradient-to-b from-white to-gray-50">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="py-25 bg-[#F8F4EE]">
+      <div className="max-w-7xl mx-auto px-16">
 
         {/* Title */}
         <div className="text-center mb-16">
