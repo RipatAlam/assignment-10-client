@@ -4,6 +4,7 @@ import LifeBenefits from "@/components/LifeBenefits";
 import LiveForeverPage from "@/components/LiveForever";
 import Percentage from "@/components/Percentage";
 import TestimonialsPage from "@/components/Testimonials";
+import WhyDigitalLifeLessonsPage from "@/components/WhyDigitalLifeLessons";
 import Image from "next/image";
 
 export default function Home() {
@@ -12,6 +13,7 @@ export default function Home() {
       <BannerPage />
       <LiveForeverPage />
       <LastGenerationsPage />
+      <WhyDigitalLifeLessonsPage />
       <LifeBenefits />
       <TestimonialsPage />
     </div>

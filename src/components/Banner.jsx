@@ -1,10 +1,67 @@
+"use client";
 import Image from "next/image";
 import { Brain, Briefcase, Heart, Activity, Wallet } from "lucide-react";
+import { motion } from "framer-motion";
+
+// Animation Variants
+const fadeLeft = {
+  hidden: {
+    opacity: 0,
+    x: -80,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut",
+    },
+  },
+};
+// Animation Variants
+const fadeRight = {
+  hidden: {
+    opacity: 0,
+    x: 80,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut",
+    },
+  },
+};
+// Animation Variants
+const fadeUp = {
+  hidden: {
+    opacity: 0,
+    y: 40,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut",
+    },
+  },
+};
+// Animation Variants
+const stagger = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
 
 export default function BannerPage() {
   return (
     <section
-      className="relative max-w-7xl mx-auto h-[700px] bg-no-repeat overflow-hidden"
+      className="relative max-w-7xl mx-auto h-[90vh] bg-no-repeat overflow-hidden"
       style={{
         backgroundImage: "url('/Images/BannerImage.png')",
         backgroundSize: "cover",
@@ -17,35 +74,58 @@ export default function BannerPage() {
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 sm:px-8 md:px-60 lg:px-25 w-full h-full flex items-center">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left Side */}
-          <div>
-            <span className="inline-block px-4 py-2 rounded-full bg-white/10 text-white text-sm mb-6 backdrop-blur">
-              ✨ Grow. Learn. Inspire.
-            </span>
+          <motion.div variants={stagger} initial="hidden" animate="visible">
+            <motion.span
+              variants={fadeUp}
+              className="inline-block px-4 py-2 rounded-full bg-white/10 text-white text-sm mb-6 backdrop-blur"
+            >
+              ✨ Learn. Share. Grow.
+            </motion.span>
 
-            <h1 className="text-6xl font-bold leading-tight text-white">
-              Real Lessons.
+            <motion.h1
+              variants={fadeLeft}
+              className="text-5xl md:text-6xl xl:text-7xl font-bold leading-tight text-white"
+            >
+              Every Experience
               <br />
-              Real <span className="text-blue-400">Impact.</span>
-            </h1>
+              Teaches
+              <br />
+              <span className="text-blue-400">Something Valuable.</span>
+            </motion.h1>
 
-            <p className="mt-6 text-gray-300 text-lg max-w-lg">
-              Discover life-changing lessons from real people. Apply them in
-              your life and become a better you.
-            </p>
+            <motion.p
+              variants={fadeUp}
+              className="mt-6 text-gray-300 text-lg max-w-lg"
+            >
+              Read inspiring life lessons shared by people around the world.
+              Learn from their experiences and share your own story to help
+              others grow.
+            </motion.p>
 
-            <div className="flex gap-4 mt-10">
-              <button className="bg-blue-600 hover:bg-blue-700 transition px-8 py-4 rounded-xl text-white font-semibold">
+            <motion.div variants={fadeUp} className="flex gap-4 mt-10">
+              <motion.button
+                whileHover={{ scale: 1.05, y: -3 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-blue-600 hover:bg-blue-700 transition px-8 py-4 rounded-xl text-white font-semibold"
+              >
                 Explore Lessons →
-              </button>
+              </motion.button>
 
-              <button className="border border-white/30 hover:bg-white/10 transition px-8 py-4 rounded-xl text-white">
+              <motion.button
+                whileHover={{ scale: 1.05, y: -3 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-blue-600 hover:bg-blue-700 transition px-8 py-4 rounded-xl text-white font-semibold"
+              >
                 Share Your Lesson
-              </button>
-            </div>
+              </motion.button>
+            </motion.div>
 
             {/* Avatar Section */}
 
-            <div className="flex items-center gap-4 mt-10">
+            <motion.div
+              variants={fadeUp}
+              className="flex items-center gap-4 mt-10"
+            >
               <div className="flex -space-x-3">
                 <img
                   src="https://i.pravatar.cc/50?img=1"
@@ -67,15 +147,20 @@ export default function BannerPage() {
 
               <p className="text-gray-300">
                 Trusted by{" "}
-                <span className="text-white font-semibold">20,000+</span>
+                <span className="text-white font-semibold">10,000+</span>
                 <br />
                 learners worldwide
               </p>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Right Side */}
-          <div className="relative h-[650px] hidden lg:flex items-center justify-center">
+          <motion.div
+            variants={fadeRight}
+            initial="hidden"
+            animate="visible"
+            className="relative h-[650px] hidden lg:flex items-center justify-center"
+          >
             {/* Circle */}
             <div className="absolute w-[550px] h-[550px] rounded-full border border-purple-400/30"></div>
 
@@ -118,7 +203,7 @@ export default function BannerPage() {
               icon={Wallet}
               className="bottom-30 right-1 animate-float"
             />
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -127,15 +212,20 @@ export default function BannerPage() {
 
 function Card({ title, lessons, icon: Icon, className }) {
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      whileHover={{
+        scale: 1.1,
+        y: -8,
+      }}
+      transition={{ duration: 0.5 }}
       className={`absolute ${className}
       w-48 rounded-2xl
       bg-white/10 backdrop-blur-xl
       border border-white/20
       px-5 py-4
-      shadow-[0_0_30px_rgba(147,51,234,0.35)]
-      transition-all duration-300
-      hover:scale-110`}
+      shadow-[0_0_30px_rgba(147,51,234,0.35)]`}
     >
       <div className="flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-500/20">
@@ -147,6 +237,6 @@ function Card({ title, lessons, icon: Icon, className }) {
           <p className="text-gray-300 text-sm">{lessons}</p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
