@@ -1,111 +1,155 @@
 "use client";
 
+import { motion } from "framer-motion";
+import { Quote } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
+
+// Testimonials Data
 const testimonials = [
   {
     id: 1,
     name: "Sarah Johnson",
     role: "Content Creator",
-    image: "https://i.pravatar.cc/150?img=1",
-    feedback:
-      "This platform completely changed how I reflect on my life experiences.",
+    image: "/Images/users/user1.jpg",
+    review:
+      "This platform completely changed how I reflect on my life experiences. Every lesson shared here feels meaningful and inspiring.",
   },
   {
     id: 2,
     name: "David Smith",
     role: "Software Engineer",
-    image: "https://i.pravatar.cc/150?img=2",
-    feedback: "A clean and powerful way to document life lessons.",
+    image: "/Images/users/user2.jpg",
+    review:
+      "A clean and powerful way to document life lessons. Reading real experiences has helped me make better personal decisions.",
   },
   {
     id: 3,
     name: "Emily Carter",
     role: "Student",
-    image: "https://i.pravatar.cc/150?img=3",
-    feedback: "Learning from experiences has never been this easy.",
-  },
-  {
-    id: 4,
-    name: "Michael Lee",
-    role: "Entrepreneur",
-    image: "https://i.pravatar.cc/150?img=4",
-    feedback: "Highly recommended for personal growth.",
+    image: "/Images/users/user3.jpg",
+    review:
+      "Learning from other people's experiences has never been this easy. I visit this platform almost every day.",
   },
 ];
 
-export default function TestimonialsPage() {
+const homeTestimonials =  testimonials.slice(0, 3); // Get the first three testimonials for the home page
+
+// Animation Variants
+const container = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+// Animation Variants
+const card = {
+  hidden: {
+    opacity: 0,
+    y: 60,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.7,
+    },
+  },
+};
+
+export default function TestimonialsSection() {
   return (
-    <section className="bg-gray-50 py-12 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+    <section className="bg-[#F9F7F3] max-w-7xl mx-auto px-6 sm:px-8 lg:px-8 py-20">
+      {/* Heading */}
 
-        {/* Header */}
-        <div className="text-center mb-10">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
-            What Our Users Say
-          </h1>
-          <p className="text-gray-500 mt-3 text-base md:text-lg">
-            Discover authentic experiences shared by learners, creators, and dreamers around the world.
-          </p>
-        </div>
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="text-center max-w-3xl mx-auto"
+      >
+        <p className="uppercase tracking-[4px] text-[#C9794D] text-sm font-semibold">
+          TESTIMONIALS
+        </p>
 
-        {/* SCROLL CONTAINER */}
-        <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-6">
+        <h2 className="mt-4 text-4xl md:text-5xl font-bold text-[#231815]">
+          What Our Users Say
+        </h2>
 
-          {testimonials.map((item) => (
-            <div
-              key={item.id}
-              className="
-                flex-shrink-0
-                w-[85%] sm:w-[60%] md:w-[32%]
-                snap-start
-                bg-white
-                p-6 sm:p-8
-                rounded-2xl
-                border
-                shadow-md
-                hover:shadow-xl
-                transition
-              "
-            >
+        <p className="mt-6 text-gray-600 text-lg leading-8">
+          Discover authentic experiences shared by learners, creators,
+          and dreamers around the world.
+        </p>
+      </motion.div>
 
-              {/* Quote */}
-              <div className="text-3xl sm:text-4xl text-blue-500 font-bold">
-                “
+      {/* Cards */}
+
+       <motion.div
+        variants={container}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16"
+      >
+        {homeTestimonials.map((item) => (
+          <motion.div
+            key={item.id}
+            variants={card}
+            whileHover={{
+              y: -10,
+              scale: 1.03,
+            }}
+            className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 hover:border-blue-200 transition-all duration-300"
+          >
+            <Quote className="w-12 h-12 text-blue-500 mb-6" />
+
+            <p className="text-gray-600 leading-8 italic">
+              "{item.review}"
+            </p>
+
+            <div className="flex items-center gap-4 mt-8">
+              <Image
+                src={item.image}
+                width={60}
+                height={60}
+                alt={item.name}
+                className="rounded-full object-cover"
+              />
+
+              <div>
+                <h3 className="font-bold text-lg text-[#231815]">
+                  {item.name}
+                </h3>
+
+                <p className="text-gray-500 text-sm">{item.role}</p>
               </div>
-
-              {/* Feedback */}
-              <p className="text-gray-600 mt-4 text-sm sm:text-base leading-relaxed">
-                {item.feedback}
-              </p>
-
-              {/* User */}
-              <div className="flex items-center gap-3 mt-6">
-                <Image
-                  src={item.image}
-                  alt={item.name}
-                  width={44}
-                  height={44}
-                  className="rounded-full border"
-                  unoptimized
-                />
-
-                <div>
-                  <h3 className="font-semibold text-gray-900 text-sm sm:text-base">
-                    {item.name}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-gray-500">
-                    {item.role}
-                  </p>
-                </div>
-              </div>
-
             </div>
-          ))}
+          </motion.div>
+        ))}
+      </motion.div>
 
-        </div>
-
-      </div>
+      {/* View All Button */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.3 }}
+        className="flex justify-center mt-14"
+      >
+        <Link
+          href="/testimonials"
+          className="group bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105"
+        >
+          View All Reviews
+          <span className="ml-2 inline-block transition-transform duration-300 group-hover:translate-x-1">
+            →
+          </span>
+        </Link>
+      </motion.div>
     </section>
   );
 }

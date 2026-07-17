@@ -36,8 +36,8 @@ const lessons = [
 
 export default function PublicLessons() {
   return (
-    <section className="bg-white py-24">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="bg-white py-24 sm:py-28 md:py-32 lg:py-36 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8 lg:px-20">
 
         <motion.div
           initial={{ opacity: 0, y: 40 }}
