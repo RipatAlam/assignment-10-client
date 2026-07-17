@@ -33,19 +33,18 @@ export default function SignUpPage() {
       }
 
 
-      const { data: user, error: authError } = await authClient.signUp.email({
-        name: data.name,
-        email: data.email,
-        password: data.password,
-        //comfirmPassword: data.confirmPassword,
-        image: imageUrl,
-        role: data.role,
-      });
-
       if (data.password !== data.confirmPassword) {
         setError("Passwords do not match");
         return;
       }
+
+      const { data: user, error: authError } = await authClient.signUp.email({
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        image: imageUrl,
+      });
+
 
       if (authError) {
         setError(authError.message || "Sign up failed. Please try again.");
@@ -57,6 +56,7 @@ export default function SignUpPage() {
       alert("Account created successfully!");
       router.push("/security/login");
     } catch (err) {
+      console.log(authError);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -238,7 +238,6 @@ export default function SignUpPage() {
                   className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="user">User</option>
-                  <option value="moderator">Moderator</option>
                   <option value="admin">Admin</option>
                 </select>
               </div>

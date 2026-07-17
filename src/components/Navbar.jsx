@@ -66,13 +66,13 @@ export default function Navbar({ user, plan = "free" }) {
                   height={40}
                 />
               </div>
-              <div className="leading-tight">
-                <h1 className="text-3xl font-extrabold tracking-wide text-white">
-                  Life<span className="text-[#2563eb]">Lore</span>
+              <div className="leading-tight font-serif">
+                <h1 className="text-3xl  font-extrabold tracking-wide text-white">
+                  Digital <span className="text-[#2563eb]">Life Lessons</span>
                 </h1>
 
                 <p className="text-xs text-slate-400 tracking-[0.35em] uppercase mt-1">
-                  Stories • Wisdom • Legacy
+                  Learn • Share • Grow
                 </p>
               </div>
             </Link>
@@ -91,7 +91,7 @@ export default function Navbar({ user, plan = "free" }) {
             >
               <Link
                 href="/"
-                className="text-slate-300 hover:text-[#2563eb] transition-colors duration-300"
+                className="text-slate-300 font-serif hover:text-[#2563eb] transition-colors duration-300"
               >
                 Home
               </Link>
@@ -103,7 +103,7 @@ export default function Navbar({ user, plan = "free" }) {
             >
               <Link
                 href="/dashboard/public-lessons"
-                className="text-slate-300 hover:text-[#2563eb] transition-colors duration-300"
+                className="text-slate-300 font-serif hover:text-[#2563eb] transition-colors duration-300"
               >
                 Public Lessons
               </Link>
@@ -118,7 +118,7 @@ export default function Navbar({ user, plan = "free" }) {
                 >
                   <Link
                     href="/dashboard/add-lesson"
-                    className="text-slate-300 hover:text-[#2563eb] transition-colors duration-300 flex items-center gap-2"
+                    className="text-slate-300 font-serif hover:text-[#2563eb] transition-colors duration-300 flex items-center gap-2"
                   >
                     Add Lesson
                   </Link>
@@ -130,7 +130,7 @@ export default function Navbar({ user, plan = "free" }) {
                 >
                   <Link
                     href="/dashboard/my-lessons"
-                    className="text-slate-300 hover:text-[#2563eb] transition-colors duration-300"
+                    className="text-slate-300 font-serif hover:text-[#2563eb] transition-colors duration-300"
                   >
                     My Lessons
                   </Link>
@@ -141,7 +141,7 @@ export default function Navbar({ user, plan = "free" }) {
             {isLoggedIn && plan === "free" && (
               <Link
                 href="/pricing"
-                className="text-[#2563eb] font-semibold hover:text-blue-400 transition-colors"
+                className="text-[#2563eb] font-semibold font-serif hover:text-blue-400 transition-colors"
               >
                 Pricing / Upgrade
               </Link>
@@ -159,7 +159,7 @@ export default function Navbar({ user, plan = "free" }) {
                 >
                   <Link
                     href="/security/login"
-                    className="text-slate-300 hover:text-[#2563eb] transition-colors"
+                    className="text-slate-300 font-serif hover:text-[#2563eb] transition-colors"
                   >
                     Login
                   </Link>
@@ -173,7 +173,7 @@ export default function Navbar({ user, plan = "free" }) {
                 >
                   <Link
                     href="/security/signup"
-                    className="bg-[#2563eb] hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-blue-500/30"
+                    className="bg-[#2563eb] font-serif hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-blue-500/30"
                   >
                     Signup
                   </Link>
@@ -213,7 +213,7 @@ export default function Navbar({ user, plan = "free" }) {
                       <Link
                         href="dashboardfile/profile"
                         onClick={() => setOpen(false)}
-                        className="flex items-center gap-2 px-4 py-3 text-slate-300 hover:bg-[#0d1728] hover:text-[#2563eb] transition-all duration-300"
+                        className="flex items-center gap-2 px-4 py-3 text-slate-300 hover:bg-[#0d1728] hover:text-[#2563eb] transition-all duration-300 font-serif"
                       >
                         <User size={16} /> Profile
                       </Link>
@@ -223,7 +223,7 @@ export default function Navbar({ user, plan = "free" }) {
                         <div>
                           <button
                             onClick={() => setDashboardOpen(!dashboardOpen)}
-                            className="px-4 py-3 rounded-lg text-slate-300 hover:bg-[#0d1728] hover:text-[#2563eb] flex items-center justify-between w-full transition-all duration-300"
+                            className="px-4 py-3 rounded-lg text-slate-300 hover:bg-[#0d1728] hover:text-[#2563eb] flex items-center justify-between w-full transition-all duration-300 font-serif"
                           >
                             <span className="flex items-center gap-2">
                               <LayoutDashboard size={16} /> Dashboard
@@ -237,7 +237,7 @@ export default function Navbar({ user, plan = "free" }) {
                               <Link
                                 onClick={closeMobile}
                                 href="/dashboardfile/user"
-                                className="px-3 py-2 rounded-lg text-slate-300 hover:bg-[#0d1728] hover:text-[#2563eb] text-sm transition-all"
+                                className="px-3 py-2 rounded-lg text-slate-300 hover:bg-[#0d1728] hover:text-[#2563eb] text-sm transition-all font-serif"
                               >
                                 👤 User
                               </Link>
@@ -248,7 +248,7 @@ export default function Navbar({ user, plan = "free" }) {
 
                       <button
                         onClick={handleLogout}
-                        className="flex items-center gap-2 w-full px-4 py-3 text-red-400 hover:bg-red-500/10 transition-all"
+                        className="flex items-center gap-2 w-full px-4 py-3 text-red-400 hover:bg-red-500/10 transition-all font-serif"
                       >
                         <LogOut size={16} /> Log out
                       </button>
@@ -270,174 +270,174 @@ export default function Navbar({ user, plan = "free" }) {
 
         {/* ================= MOBILE MENU ================= */}
         <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"
-            ref={dropdownRef}
-            onClick={closeMobile}
-          >
+          {mobileOpen && (
             <motion.div
-              initial={{ x: 300 }}
-              animate={{ x: 0 }}
-              exit={{ x: 300 }}
-              transition={{ duration: 0.35 }}
-              onClick={(e) => e.stopPropagation()}
-              className="absolute top-0 right-0 w-72 h-full bg-[#07111f] shadow-2xl border-l border-[#0d1728] p-6 flex flex-col gap-5"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="md:hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"
+              ref={dropdownRef}
+              onClick={closeMobile}
             >
-              {/* Header */}
-              <div className="flex items-center justify-between border-b border-[#0d1728] pb-4">
-                <h2 className="font-semibold text-lg text-white">Menu</h2>
-                <button
-                  onClick={closeMobile}
-                  className="text-slate-300 hover:text-[#2563eb]"
-                >
-                  <X />
-                </button>
-              </div>
+              <motion.div
+                initial={{ x: 300 }}
+                animate={{ x: 0 }}
+                exit={{ x: 300 }}
+                transition={{ duration: 0.35 }}
+                onClick={(e) => e.stopPropagation()}
+                className="absolute top-0 right-0 w-72 h-full bg-[#07111f] shadow-2xl border-l border-[#0d1728] p-6 flex flex-col gap-5"
+              >
+                {/* Header */}
+                <div className="flex items-center justify-between border-b border-[#0d1728] pb-4">
+                  <h2 className="font-semibold font-serif text-lg text-white">Menu</h2>
+                  <button
+                    onClick={closeMobile}
+                    className="text-slate-300 text-white hover:text-[#2563eb]"
+                  >
+                    <X />
+                  </button>
+                </div>
 
-              {/* Links */}
-              <div className="flex flex-col gap-3 text-sm font-medium">
-                <Link
-                  onClick={closeMobile}
-                  href="/"
-                  className="px-3 py-2 rounded-lg text-slate-300 hover:bg-[#0d1728] hover:text-[#2563eb] transition-all duration-300"
-                >
-                  Home
-                </Link>
-
-                <Link
-                  onClick={closeMobile}
-                  href="/dashboard/public-lessons"
-                  className="px-3 py-2 rounded-lg hover:bg-gray-100"
-                >
-                  Public Lessons
-                </Link>
-
-                {/* 🔥 DASHBOARD DROPDOWN */}
-                {isLoggedIn && (
-                  <div>
-                    <button
-                      onClick={() => setDashboardOpen(!dashboardOpen)}
-                      className="px-3 py-2 rounded-lg hover:bg-gray-100 flex items-center justify-between w-full"
-                    >
-                      <span className="flex items-center gap-2">
-                        <LayoutDashboard size={16} /> Dashboard
-                      </span>
-
-                      <span>{dashboardOpen ? "▲" : "▼"}</span>
-                    </button>
-
-                    {dashboardOpen && (
-                      <div className="ml-4 flex flex-col gap-2 border-l pl-3">
-                        <Link
-                          onClick={closeMobile}
-                          href="/dashboardfile/user"
-                          className="px-3 py-2 rounded-lg hover:bg-gray-100 text-sm"
-                        >
-                          👤 User
-                        </Link>
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {isLoggedIn && (
-                  <>
-                    <Link
-                      onClick={closeMobile}
-                      href="/dashboard/add-lesson"
-                      className="px-3 py-2 rounded-lg hover:bg-gray-100 flex items-center gap-2"
-                    >
-                      <BookOpen size={16} /> Add Lesson
-                    </Link>
-
-                    <Link
-                      onClick={closeMobile}
-                      href="/dashboard/my-lessons"
-                      className="px-3 py-2 rounded-lg hover:bg-gray-100 flex items-center gap-2"
-                    >
-                      <LayoutDashboard size={16} /> My Lessons
-                    </Link>
-                  </>
-                )}
-
-                {isLoggedIn && plan === "free" && (
+                {/* Links */}
+                <div className="flex flex-col gap-3 text-sm font-medium">
                   <Link
                     onClick={closeMobile}
-                    href="/pricing"
-                    className="px-3 py-2 rounded-lg bg-[#2563eb] text-white font-semibold hover:bg-blue-700 transition-all"
+                    href="/"
+                    className="px-3 py-2 rounded-lg text-slate-300 hover:bg-[#0d1728] hover:text-[#2563eb] transition-all duration-300 font-serif"
                   >
-                    ⚡ Pricing / Upgrade
+                    Home
                   </Link>
-                )}
-              </div>
 
-              {/* Bottom */}
-              <div className="mt-auto border-t pt-4">
-                {!isLoggedIn ? (
-                  <div className="flex flex-col gap-2">
-                    <Link
-                      onClick={closeMobile}
-                      href="/security/login"
-                      className="w-full text-center px-3 py-2 rounded-lg border border-[#0d1728] text-slate-300 hover:bg-[#0d1728] transition-all"
-                    >
-                      Login
-                    </Link>
+                  <Link
+                    onClick={closeMobile}
+                    href="/dashboard/public-lessons"
+                    className="px-3 py-2 rounded-lg hover:bg-gray-100 font-serif"
+                  >
+                    Public Lessons
+                  </Link>
 
-                    <Link
-                      onClick={closeMobile}
-                      href="/security/signup"
-                      className="w-full text-center px-3 py-2 rounded-lg bg-[#2563eb] text-white hover:bg-blue-700 transition-all"
-                    >
-                      Signup
-                    </Link>
-                  </div>
-                ) : (
-                  <div className="flex flex-col gap-2">
-                    <div className="flex items-center gap-3 px-3 py-3 bg-[#050b18] border border-[#0d1728] rounded-xl">
-                      <Image
-                        src={
-                          session?.user?.image?.trim()
-                            ? session.user.image
-                            : "https://i.pravatar.cc/40"
-                        }
-                        alt="avatar"
-                        width={36}
-                        height={36}
-                        className="rounded-full"
-                      />
-                      <div>
-                        <p className="text-sm font-semibold text-white">
-                          {session.user.name}
-                        </p>
-                        <p className="text-xs text-slate-400">Logged in</p>
-                      </div>
+                  {/* 🔥 DASHBOARD DROPDOWN */}
+                  {isLoggedIn && (
+                    <div>
+                      <button
+                        onClick={() => setDashboardOpen(!dashboardOpen)}
+                        className="px-3 py-2 rounded-lg hover:bg-gray-100 font-serif flex items-center justify-between w-full"
+                      >
+                        <span className="flex items-center gap-2">
+                          <LayoutDashboard size={16} /> Dashboard
+                        </span>
+
+                        <span>{dashboardOpen ? "▲" : "▼"}</span>
+                      </button>
+
+                      {dashboardOpen && (
+                        <div className="ml-4 flex flex-col gap-2 border-l pl-3">
+                          <Link
+                            onClick={closeMobile}
+                            href="/dashboardfile/user"
+                            className="px-3 py-2 rounded-lg hover:bg-gray-100 text-sm font-serif"
+                          >
+                            👤 User
+                          </Link>
+                        </div>
+                      )}
                     </div>
+                  )}
 
+                  {isLoggedIn && (
+                    <>
+                      <Link
+                        onClick={closeMobile}
+                        href="/dashboard/add-lesson"
+                        className="px-3 py-2 rounded-lg hover:bg-gray-100 flex items-center gap-2 font-serif"
+                      >
+                        <BookOpen size={16} /> Add Lesson
+                      </Link>
+
+                      <Link
+                        onClick={closeMobile}
+                        href="/dashboard/my-lessons"
+                        className="px-3 py-2 rounded-lg hover:bg-gray-100 flex items-center gap-2 font-serif"
+                      >
+                        <LayoutDashboard size={16} /> My Lessons
+                      </Link>
+                    </>
+                  )}
+
+                  {isLoggedIn && plan === "free" && (
                     <Link
                       onClick={closeMobile}
-                      href="/profile"
-                      className="px-3 py-2 rounded-lg text-slate-300 hover:bg-[#0d1728] hover:text-[#2563eb] flex items-center gap-2 transition-all"
+                      href="/pricing"
+                      className="px-3 py-2 rounded-lg bg-[#2563eb] text-white font-semibold hover:bg-blue-700 transition-all font-serif"
                     >
-                      <User size={16} /> Profile
+                      ⚡ Pricing / Upgrade
                     </Link>
+                  )}
+                </div>
 
-                    <button
-                      onClick={handleLogout}
-                      className="px-3 py-2 rounded-lg text-red-400 hover:bg-red-500/10 flex items-center gap-2 transition-all"
-                    >
-                      <LogOut size={16} /> Logout
-                    </button>
-                  </div>
-                )}
-              </div>
+                {/* Bottom */}
+                <div className="mt-auto border-t pt-4">
+                  {!isLoggedIn ? (
+                    <div className="flex flex-col gap-2">
+                      <Link
+                        onClick={closeMobile}
+                        href="/security/login"
+                        className="w-full text-center px-3 py-2 rounded-lg border border-[#0d1728] text-slate-300 hover:bg-[#0d1728] transition-all font-serif"
+                      >
+                        Login
+                      </Link>
+
+                      <Link
+                        onClick={closeMobile}
+                        href="/security/signup"
+                        className="w-full text-center px-3 py-2 rounded-lg bg-[#2563eb] text-white hover:bg-blue-700 transition-all font-serif"
+                      >
+                        Signup
+                      </Link>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col gap-2">
+                      <div className="flex items-center gap-3 px-3 py-3 bg-[#050b18] border border-[#0d1728] rounded-xl">
+                        <Image
+                          src={
+                            session?.user?.image?.trim()
+                              ? session.user.image
+                              : "https://i.pravatar.cc/40"
+                          }
+                          alt="avatar"
+                          width={36}
+                          height={36}
+                          className="rounded-full"
+                        />
+                        <div>
+                          <p className="text-sm font-serif font-semibold text-white">
+                            {session.user.name}
+                          </p>
+                          <p className="text-xs text-slate-400 font-serif">Logged in</p>
+                        </div>
+                      </div>
+
+                      <Link
+                        onClick={closeMobile}
+                        href="/profile"
+                        className="px-3 py-2 rounded-lg text-slate-300 hover:bg-[#0d1728] hover:text-[#2563eb] flex items-center gap-2 transition-all font-serif"
+                      >
+                        <User size={16} /> Profile
+                      </Link>
+
+                      <button
+                        onClick={handleLogout}
+                        className="px-3 py-2 rounded-lg text-red-400 hover:bg-red-500/10 flex items-center gap-2 transition-all font-serif"
+                      >
+                        <LogOut size={16} /> Logout
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
+          )}
         </AnimatePresence>
       </div>
     </header>

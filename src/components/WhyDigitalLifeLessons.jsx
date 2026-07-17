@@ -95,7 +95,7 @@ export default function WhyDigitalLifeLessonsPage() {
           viewport={{ once: true }}
           className="mb-14 sm:mb-16 md:mb-20"
         >
-          <p className="uppercase tracking-[4px] text-[#C9794D] text-xs sm:text-sm font-semibold">
+          <p className="uppercase tracking-[4px] text-[#C9794D] text-xs sm:text-sm font-semibold ">
             WHY DIGITAL LIFE LESSONS
           </p>
 

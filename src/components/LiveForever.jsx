@@ -92,7 +92,7 @@ export default function LiveForeverPage() {
             About Digital Life Lessons
           </p>
 
-          <h2 className="mt-4 text-5xl font-bold text-[#231815] leading-tight">
+          <h2 className="mt-4 text-5xl font-serif font-bold text-[#231815] leading-tight">
             Every Experience
             <br />
             Has a Lesson
@@ -129,7 +129,7 @@ export default function LiveForeverPage() {
                 className="relative bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl"
               >
                 {/* Background Number */}
-                <h1 className="absolute left-8 top-4 text-8xl font-bold text-gray-100">
+                <h1 className="absolute left-8 top-4 text-8xl font-serif font-bold text-gray-100">
                   {item.id}
                 </h1>
 
@@ -144,7 +144,7 @@ export default function LiveForeverPage() {
                   <Icon size={38} className="text-gray-800" />
                 </motion.div>
 
-                <h3 className="mt-8 text-3xl font-semibold text-center text-[#231815]">
+                <h3 className="mt-8 text-3xl font-serif font-semibold text-center text-[#231815]">
                   {item.title}
                 </h3>
 

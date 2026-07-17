@@ -1,98 +1,141 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { Heart, MessageCircle, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 
 const lessons = [
   {
     id: 1,
-    title: "Never Stop Learning",
+    name: "Sarah Ahmed",
     category: "Career",
-    author: "John Doe",
-    image: "https://i.pravatar.cc/150?img=1",
-    excerpt: "The world changes quickly. Keep learning new skills.",
-    likes: 25,
-    views: 120,
+    title: "The biggest career mistake I made at 25...",
+    likes: "2.4K",
+    comments: "230",
+    image: "/Images/user1.jpg",
   },
   {
     id: 2,
-    title: "Communication Matters",
-    category: "Relationships",
-    author: "Sarah Smith",
-    image: "https://i.pravatar.cc/150?img=2",
-    excerpt: "Most relationship problems can be solved through communication.",
-    likes: 42,
-    views: 300,
+    name: "John Smith",
+    category: "Health",
+    title: "Ignoring my health almost changed my life.",
+    likes: "1.8K",
+    comments: "120",
+    image: "/Images/user2.jpg",
+  },
+  {
+    id: 3,
+    name: "Emily Johnson",
+    category: "Finance",
+    title: "I wasted money for years before learning this.",
+    likes: "3.1K",
+    comments: "310",
+    image: "/Images/user3.jpg",
   },
 ];
 
-export default function PublicLessonsPage() {
+export default function PublicLessons() {
   return (
-    <section className="min-h-screen bg-gray-100 py-10 px-4">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-10">
-          <h1 className="text-5xl font-bold text-gray-900">
-            Public Life Lessons
-          </h1>
+    <section className="bg-white py-24">
+      <div className="max-w-7xl mx-auto px-6">
 
-          <p className="text-gray-600 mt-3">
-            Discover wisdom shared by people around the world.
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <p className="uppercase tracking-[4px] text-[#C9794D] font-semibold">
+            PUBLIC LESSONS
           </p>
 
-          <input
-            type="text"
-            placeholder="Search lessons..."
-            className="mt-6 w-full max-w-lg px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none"
-          />
-        </div>
+          <h2 className="text-5xl font-bold mt-4 text-[#231815]">
+            Learn From Real Experiences
+          </h2>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {lessons.map((lesson) => (
-            <div
+          <p className="mt-5 text-gray-600 max-w-2xl mx-auto">
+            Read inspiring life lessons shared by people from around the world
+            and discover practical wisdom you can apply in your own life.
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+          {lessons.map((lesson, index) => (
+            <motion.div
               key={lesson.id}
-              className="bg-white rounded-2xl shadow-md hover:shadow-xl transition overflow-hidden"
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.15 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -8 }}
+              className="bg-[#F8F4EE] rounded-3xl overflow-hidden shadow-lg"
             >
-              <div className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <Image
-                    src={lesson.image}
-                    alt={lesson.author}
-                    width={50}
-                    height={50}
-                    className="rounded-full"
-                  />
 
-                  <div>
-                    <h3 className="font-semibold">{lesson.author}</h3>
-                    <p className="text-sm text-gray-500">
-                      {lesson.category}
-                    </p>
-                  </div>
-                </div>
+              <Image
+                src={lesson.image}
+                width={500}
+                height={300}
+                alt={lesson.title}
+                className="w-full h-56 object-cover"
+              />
 
-                <h2 className="text-xl font-bold text-gray-900 mb-3">
+              <div className="p-7">
+
+                <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
+                  {lesson.category}
+                </span>
+
+                <h3 className="mt-5 text-2xl font-bold text-[#231815]">
                   {lesson.title}
-                </h2>
+                </h3>
 
-                <p className="text-gray-600 mb-4">
-                  {lesson.excerpt}
-                </p>
+                <div className="flex items-center gap-3 mt-5">
+                  <div className="w-10 h-10 rounded-full bg-gray-300"></div>
 
-                <div className="flex justify-between text-sm text-gray-500 mb-4">
-                  <span>❤️ {lesson.likes}</span>
-                  <span>👁️ {lesson.views}</span>
+                  <p className="font-medium">
+                    {lesson.name}
+                  </p>
                 </div>
 
-                <Link
-                  href={`/lessons/${lesson.id}`}
-                  className="block text-center bg-gray-900 text-white py-3 rounded-xl hover:bg-black transition"
-                >
-                  Read More
-                </Link>
+                <div className="flex justify-between mt-7">
+
+                  <div className="flex gap-5 text-gray-600">
+
+                    <div className="flex items-center gap-2">
+                      <Heart size={18}/>
+                      {lesson.likes}
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <MessageCircle size={18}/>
+                      {lesson.comments}
+                    </div>
+
+                  </div>
+
+                  <button className="flex items-center gap-2 text-blue-600 font-semibold hover:gap-3 transition-all">
+                    Read
+                    <ArrowRight size={18}/>
+                  </button>
+
+                </div>
+
               </div>
-            </div>
+
+            </motion.div>
           ))}
+
         </div>
+
+        <div className="text-center mt-16">
+
+          <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-semibold transition">
+            View All Lessons
+          </button>
+
+        </div>
+
       </div>
     </section>
   );

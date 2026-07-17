@@ -84,7 +84,7 @@ export default function BannerPage() {
 
             <motion.h1
               variants={fadeLeft}
-              className="text-5xl md:text-6xl xl:text-7xl font-bold leading-tight text-white"
+              className="text-5xl font-serif md:text-6xl xl:text-6xl font-bold leading-tight text-white"
             >
               Every Experience
               <br />
@@ -95,7 +95,7 @@ export default function BannerPage() {
 
             <motion.p
               variants={fadeUp}
-              className="mt-6 text-gray-300 text-lg max-w-lg"
+              className="mt-6 text-gray-300 font-serif text-lg max-w-lg"
             >
               Read inspiring life lessons shared by people around the world.
               Learn from their experiences and share your own story to help
@@ -106,7 +106,7 @@ export default function BannerPage() {
               <motion.button
                 whileHover={{ scale: 1.05, y: -3 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-blue-600 hover:bg-blue-700 transition px-8 py-4 rounded-xl text-white font-semibold"
+                className="bg-blue-600 font-serif hover:bg-blue-700 transition px-8 py-4 rounded-xl text-white font-semibold"
               >
                 Explore Lessons →
               </motion.button>
@@ -114,7 +114,7 @@ export default function BannerPage() {
               <motion.button
                 whileHover={{ scale: 1.05, y: -3 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-blue-600 hover:bg-blue-700 transition px-8 py-4 rounded-xl text-white font-semibold"
+                className="bg-blue-600 font-serif hover:bg-blue-700 transition px-8 py-4 rounded-xl text-white font-semibold"
               >
                 Share Your Lesson
               </motion.button>
@@ -145,7 +145,7 @@ export default function BannerPage() {
                 />
               </div>
 
-              <p className="text-gray-300">
+              <p className="text-gray-300 font-serif">
                 Trusted by{" "}
                 <span className="text-white font-semibold">10,000+</span>
                 <br />
@@ -233,8 +233,8 @@ function Card({ title, lessons, icon: Icon, className }) {
         </div>
 
         <div>
-          <h3 className="text-white font-semibold">{title}</h3>
-          <p className="text-gray-300 text-sm">{lessons}</p>
+          <h3 className="text-white font-semibold font-serif">{title}</h3>
+          <p className="text-gray-300 text-sm font-serif">{lessons}</p>
         </div>
       </div>
     </motion.div>
