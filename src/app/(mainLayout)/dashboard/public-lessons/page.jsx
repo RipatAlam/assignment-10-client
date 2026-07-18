@@ -3,33 +3,33 @@ import Image from "next/image";
 import { Heart, MessageCircle, ArrowRight, Search } from "lucide-react";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-
+import { getPublicLessons } from "@/lib/lessonServer";
+import Link from "next/link";
 
 export default function PublicLessons() {
   const [search, setSearch] = useState("");
   const [publicLessonsData, setPublicLessonsData] = useState([]);
 
-  useEffect(() => {
+  useEffect (() => {
     const fetchLessons = async () => {
       try {
-        const res = await fetch("http://localhost:8000/public-lessons");
-        const data = await res.json();
-
+        const data = await getPublicLessons ();
         setPublicLessonsData(data);
-      } catch (error) {
-        console.error("Fetch Error:", error);
       }
-    };
-
+      catch (error) {
+        console.error("Fetch Error:", error)
+      }
+    }
     fetchLessons();
   }, []);
 
   const filteredLessons = publicLessonsData.filter((lesson) => {
-    const searchTerm = search ? search.toLowerCase() : "";
+    const searchTerm = (search || "").toLowerCase();
+
     return (
-      lesson.title.toLowerCase().includes(searchTerm) ||
-      lesson.category.toLowerCase().includes(searchTerm) ||
-      lesson.name.toLowerCase().includes(searchTerm)
+      lesson.title?.toLowerCase().includes(searchTerm) ||
+      lesson.category?.toLowerCase().includes(searchTerm) ||
+      lesson.name?.toLowerCase().includes(searchTerm)
     );
   });
 
@@ -125,10 +125,12 @@ export default function PublicLessons() {
                       </div>
                     </div>
 
+                    <Link href={`/dashboard/public-lessons/${lesson._id}`}>
                     <button className="flex items-center gap-2 text-blue-600 font-semibold hover:gap-3 transition-all">
                       Read
                       <ArrowRight size={18} />
                     </button>
+                    </Link>
                   </div>
                 </div>
               </motion.div>
