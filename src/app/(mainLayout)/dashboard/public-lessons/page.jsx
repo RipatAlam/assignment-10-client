@@ -10,16 +10,15 @@ export default function PublicLessons() {
   const [search, setSearch] = useState("");
   const [publicLessonsData, setPublicLessonsData] = useState([]);
 
-  useEffect (() => {
+  useEffect(() => {
     const fetchLessons = async () => {
       try {
-        const data = await getPublicLessons ();
+        const data = await getPublicLessons();
         setPublicLessonsData(data);
+      } catch (error) {
+        console.error("Fetch Error:", error);
       }
-      catch (error) {
-        console.error("Fetch Error:", error)
-      }
-    }
+    };
     fetchLessons();
   }, []);
 
@@ -34,8 +33,8 @@ export default function PublicLessons() {
   });
 
   return (
-    <section className="bg-white py-24 sm:py-28 md:py-32 lg:py-36 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8 lg:px-20">
+    <section className="max-w-7xl mx-auto w-full overflow-hidden">
+      <div className="bg-[#F8F4EE] py-20 px-6 sm:px-8 md:px-10 lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -81,7 +80,7 @@ export default function PublicLessons() {
           {filteredLessons.length > 0 ? (
             filteredLessons.map((lesson, index) => (
               <motion.div
-                key={lesson.id}
+                key={lesson._id}
                 initial={{ opacity: 0, y: 60 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.15 }}
@@ -126,10 +125,10 @@ export default function PublicLessons() {
                     </div>
 
                     <Link href={`/dashboard/public-lessons/${lesson._id}`}>
-                    <button className="flex items-center gap-2 text-blue-600 font-semibold hover:gap-3 transition-all">
-                      Read
-                      <ArrowRight size={18} />
-                    </button>
+                      <button className="flex items-center gap-2 text-blue-600 font-semibold hover:gap-3 transition-all">
+                        Read
+                        <ArrowRight size={18} />
+                      </button>
                     </Link>
                   </div>
                 </div>

@@ -1,6 +1,8 @@
 //Public-lessons
 export const getPublicLessons = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons`)
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons`,
+  );
 
   if (!res.ok) {
     throw new Error("Failed to fetch public lessons");
@@ -11,7 +13,9 @@ export const getPublicLessons = async () => {
 
 //Publiclessons-Home Page
 export const getPublicLessonsHome = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/publiclessons-home`)
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/publiclessons-home`,
+  );
 
   if (!res.ok) {
     throw new Error("Failed to fetch public lessons");
@@ -22,11 +26,64 @@ export const getPublicLessonsHome = async () => {
 
 //Public-lessons/:id
 export const getPublicLessonsId = async (id) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons/${id}`)
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons/${id}`,
+  );
 
   if (!res.ok) {
     throw new Error("Failed to fetch public lessons");
   }
 
   return await res.json();
+};
+
+//Profile
+export const updateProfile = async (id, { name, email, image, password }) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}dashboardfile/profile/update/${id}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        image,
+        password,
+      }),
+    },
+  );
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message || "Profile update failed");
+  }
+
+  return data;
+};
+
+
+//Add Lesson
+// Add Public Lesson
+export const addPublicLesson = async (lessonData) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(lessonData),
+    }
+  );
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message || "Failed to add lesson");
+  }
+
+  return data;
 };

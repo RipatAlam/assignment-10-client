@@ -140,7 +140,7 @@ export default function Navbar({ user, plan = "free" }) {
 
             {isLoggedIn && plan === "free" && (
               <Link
-                href="/pricing"
+                href="/dashboard/pricing-upgrade"
                 className="text-[#2563eb] font-semibold font-serif hover:text-blue-400 transition-colors"
               >
                 Pricing / Upgrade
@@ -211,7 +211,7 @@ export default function Navbar({ user, plan = "free" }) {
                       </div>
 
                       <Link
-                        href="dashboardfile/profile"
+                        href="/dashboardfile/profile"
                         onClick={() => setOpen(false)}
                         className="flex items-center gap-2 px-4 py-3 text-slate-300 hover:bg-[#0d1728] hover:text-[#2563eb] transition-all duration-300 font-serif"
                       >
@@ -368,7 +368,7 @@ export default function Navbar({ user, plan = "free" }) {
                   {isLoggedIn && plan === "free" && (
                     <Link
                       onClick={closeMobile}
-                      href="/pricing"
+                      href="/dashboard/pricing-upgrade"
                       className="px-3 py-2 rounded-lg bg-[#2563eb] text-white font-semibold hover:bg-blue-700 transition-all font-serif"
                     >
                       ⚡ Pricing / Upgrade
@@ -420,7 +420,7 @@ export default function Navbar({ user, plan = "free" }) {
 
                       <Link
                         onClick={closeMobile}
-                        href="/profile"
+                        href="/dashboardfile/profile"
                         className="px-3 py-2 rounded-lg text-slate-300 hover:bg-[#0d1728] hover:text-[#2563eb] flex items-center gap-2 transition-all font-serif"
                       >
                         <User size={16} /> Profile

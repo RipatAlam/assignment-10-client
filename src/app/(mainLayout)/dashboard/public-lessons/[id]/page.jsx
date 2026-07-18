@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { Heart, Calendar, User,   MessageCircle } from "lucide-react";
+import { Heart, Calendar, User, MessageCircle } from "lucide-react";
 import { getPublicLessonsId } from "@/lib/lessonServer";
 import { useParams } from "next/navigation";
 
@@ -35,8 +35,8 @@ export default function LessonDetails() {
   }
 
   return (
-    <section className="bg-[#F8F4EE] py-30">
-      <div className="max-w-7xl mx-auto px-5">
+    <section className="max-w-7xl mx-auto w-full overflow-hidden">
+      <div className="bg-[#F8F4EE] py-20 px-6 sm:px-8 md:px-10 lg:px-10">
         <div className="grid lg:grid-cols-2 gap-14 items-center">
           {/* Left Image */}
           <div>
