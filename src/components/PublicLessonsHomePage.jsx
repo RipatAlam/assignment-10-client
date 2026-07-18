@@ -23,8 +23,8 @@ export default function PublicLessonsHomePage() {
   }, []);
 
   return (
-    <section className="bg-[#F8F4EE] py-24 sm:py-28 md:py-32 lg:py-36 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8 lg:px-20">
+    <section className="max-w-7xl mx-auto w-full overflow-hidden">
+      <div className="bg-[#F8F4EE] py-20 px-6 sm:px-8 md:px-10 lg:px-10">
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
