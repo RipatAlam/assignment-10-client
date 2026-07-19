@@ -64,7 +64,6 @@ export const updateProfile = async (id, { name, email, image, password }) => {
   return data;
 };
 
-
 //Add Lesson
 // Add Public Lesson
 export const addPublicLesson = async (lessonData) => {
@@ -76,13 +75,53 @@ export const addPublicLesson = async (lessonData) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(lessonData),
-    }
+    },
   );
 
   const data = await res.json();
 
   if (!res.ok) {
     throw new Error(data.message || "Failed to add lesson");
+  }
+
+  return data;
+};
+
+//My Lessons Delete
+export const deletePublicLesson = async (id) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons/${id}`,
+    {
+      method: "DELETE",
+    },
+  );
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message || "Failed to delete lesson");
+  }
+
+  return data;
+};
+
+//My Lessons Update
+export const updatePublicLesson = async (id, lessonData) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons/${id}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(lessonData),
+    },
+  );
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message || "Failed to update lesson");
   }
 
   return data;
