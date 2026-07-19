@@ -218,7 +218,9 @@ export default function MyLessonsPage() {
                           </button>
                         </Link>
 
-                        <Link href={`/dashboard/edit-lesson/${lesson._id}`}>
+                        <Link
+                          href={`/dashboard/my-lessons/edit-lesson/${lesson._id}`}
+                        >
                           <button className="bg-green-100 p-2 rounded-lg hover:bg-green-600 hover:text-white">
                             <Pencil size={18} />
                           </button>
