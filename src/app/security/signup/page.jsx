@@ -6,7 +6,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
-import { uploadImage } from "@/imgbb/page";
+import { uploadImage } from "@/lib/uploadImage";
+
 
 export default function SignUpPage() {
   const [error, setError] = useState("");

@@ -170,21 +170,24 @@ export default function MyLessonsPage() {
 
         {filteredLessons.length > 0 ? (
           <div className="bg-white rounded-2xl shadow overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full border-separate border-spacing-y-4">
               <thead className="bg-gray-100">
                 <tr>
                   <th className="text-left p-4">Lesson</th>
                   <th className="text-left">Category</th>
                   <th className="text-left">Likes</th>
-                  <th className="text-left">Date</th>
+                  <th className="text-left p-5">Date</th>
                   <th className="text-center">Actions</th>
                 </tr>
               </thead>
 
               <tbody>
                 {filteredLessons.map((lesson) => (
-                  <tr key={lesson._id} className="border-b hover:bg-gray-50">
-                    <td className="p-4">
+                  <tr
+                    key={lesson._id}
+                    className="bg-white shadow-md hover:shadow-lg transition"
+                  >
+                    <td className="p-4 rounded-l-2xl">
                       <div className="flex items-center gap-4">
                         <Image
                           src={lesson.image}
@@ -210,9 +213,9 @@ export default function MyLessonsPage() {
 
                     <td>{lesson.createdAt}</td>
 
-                    <td>
+                    <td className="rounded-r-2xl">
                       <div className="flex justify-center gap-2">
-                        <Link href={`/public-lessons/${lesson._id}`}>
+                        <Link href={`/dashboard/public-lessons/${lesson._id}`}>
                           <button className="bg-blue-100 p-2 rounded-lg hover:bg-blue-600 hover:text-white">
                             <Eye size={18} />
                           </button>
@@ -228,7 +231,7 @@ export default function MyLessonsPage() {
 
                         <button
                           onClick={() => handleDelete(lesson._id)}
-                          className="bg-red-100 p-2 rounded-lg hover:bg-red-600 hover:text-white"
+                          className="bg-red-100 p-2 mr-5 rounded-lg hover:bg-red-600 hover:text-white"
                         >
                           <Trash2 size={18} />
                         </button>

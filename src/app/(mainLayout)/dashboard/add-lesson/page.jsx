@@ -4,17 +4,39 @@ import { useState } from "react";
 import Image from "next/image";
 import { UploadCloud, BookOpen } from "lucide-react";
 import { addPublicLesson } from "@/lib/lessonServer";
-import { uploadImage } from "@/imgbb/page";
+import { uploadImage } from "@/lib/uploadImage";
+import { useRouter } from "next/navigation";
+import { useSession } from "@/lib/auth-client";
 
 export default function AddLessonPage() {
-  const addLessonData = addPublicLesson();
-
   const [preview, setPreview] = useState(null);
   const [image, setImage] = useState(null);
+
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("Career");
+
   const [story, setStory] = useState("");
   const [lesson, setLesson] = useState("");
+  const [summary, setSummary] = useState("");
+
+  const [profession, setProfession] = useState("");
+  const [country, setCountry] = useState("");
+
+  const [tags, setTags] = useState("");
+  const [readingTime, setReadingTime] = useState("");
+
+  const [price, setPrice] = useState("");
+  const [discount, setDiscount] = useState("");
+
+  const [isPremium, setIsPremium] = useState(false);
+  const [certificate, setCertificate] = useState(false);
+
+  const router = useRouter();
+  const { data } = useSession();
+
+  const user = data?.user;
+  console.log(data);
+console.log(data?.user);
 
   const handleImagePreview = (e) => {
     const file = e.target.files[0];
@@ -38,9 +60,46 @@ export default function AddLessonPage() {
         category,
         story,
         lesson,
+        summary,
+
         image: imageUrl,
+
+        // author info
+        name: user?.name || "Anonymous",
+        email: user?.email || "",
+        userId: user?.id || user?._id,
+
+        profession,
+        country,
+
+        // extra info
+        tags: tags.split(",").map((tag) => tag.trim()),
+        readingTime,
+
+        // pricing
+        price,
+        currency: "USD",
+        discount,
+        finalPrice: price - (price * discount) / 100,
+
+        isPremium,
+        plan: isPremium ? "Premium" : "Free",
+        access: "Lifetime",
+        certificate,
+
+        // stats
         likes: 0,
+        comments: 0,
+        views: 0,
+        shares: 0,
+        bookmarks: 0,
+        rating: 0,
+
+        featured: false,
+        status: "published",
+
         createdAt: new Date(),
+        updatedAt: new Date(),
       };
 
       // 3. Save to MongoDB
@@ -48,6 +107,7 @@ export default function AddLessonPage() {
 
       console.log(result);
       alert("Lesson added successfully!");
+      router.push("/dashboard/public-lessons");
     } catch (error) {
       console.error(error);
       alert("Failed to add lesson");
@@ -109,6 +169,18 @@ export default function AddLessonPage() {
               <option>Family</option>
             </select>
           </div>
+          {/* Summary */}
+          <div>
+            <label className="font-semibold block mb-2">Short Summary</label>
+
+            <textarea
+              rows={3}
+              value={summary}
+              onChange={(e) => setSummary(e.target.value)}
+              placeholder="Short description of your lesson..."
+              className="w-full border rounded-xl px-4 py-3 resize-none outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
 
           {/* Cover Image */}
           <div>
@@ -144,6 +216,33 @@ export default function AddLessonPage() {
             </label>
           </div>
 
+          {/* Author Info */}
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <label className="font-semibold block mb-2">Profession</label>
+
+              <input
+                type="text"
+                value={profession}
+                onChange={(e) => setProfession(e.target.value)}
+                placeholder="Software Engineer"
+                className="w-full border rounded-xl px-4 py-3"
+              />
+            </div>
+
+            <div>
+              <label className="font-semibold block mb-2">Country</label>
+
+              <input
+                type="text"
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+                placeholder="United States"
+                className="w-full border rounded-xl px-4 py-3"
+              />
+            </div>
+          </div>
+
           {/* Story */}
           <div>
             <label className="font-semibold block mb-2">Your Story</label>
@@ -168,6 +267,77 @@ export default function AddLessonPage() {
               placeholder="What lesson did you learn from this experience?"
               className="w-full border rounded-xl px-4 py-3 resize-none outline-none focus:ring-2 focus:ring-blue-500"
             />
+          </div>
+          {/* Tags */}
+          <div>
+            <label className="font-semibold block mb-2">Tags</label>
+
+            <input
+              type="text"
+              value={tags}
+              onChange={(e) => setTags(e.target.value)}
+              placeholder="Career, Success, Growth"
+              className="w-full border rounded-xl px-4 py-3"
+            />
+          </div>
+
+          {/* Pricing */}
+          <div className="grid md:grid-cols-3 gap-6">
+            <div>
+              <label className="font-semibold block mb-2">Price</label>
+
+              <input
+                type="number"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                placeholder="24.99"
+                className="w-full border rounded-xl px-4 py-3"
+              />
+            </div>
+
+            <div>
+              <label className="font-semibold block mb-2">Discount %</label>
+
+              <input
+                type="number"
+                value={discount}
+                onChange={(e) => setDiscount(e.target.value)}
+                placeholder="20"
+                className="w-full border rounded-xl px-4 py-3"
+              />
+            </div>
+
+            <div>
+              <label className="font-semibold block mb-2">Reading Time</label>
+
+              <input
+                type="text"
+                value={readingTime}
+                onChange={(e) => setReadingTime(e.target.value)}
+                placeholder="5 min read"
+                className="w-full border rounded-xl px-4 py-3"
+              />
+            </div>
+          </div>
+
+          <div className="flex gap-8">
+            <label className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={isPremium}
+                onChange={(e) => setIsPremium(e.target.checked)}
+              />
+              Premium
+            </label>
+
+            <label className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={certificate}
+                onChange={(e) => setCertificate(e.target.checked)}
+              />
+              Certificate
+            </label>
           </div>
 
           <button

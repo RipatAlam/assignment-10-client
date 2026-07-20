@@ -23,6 +23,18 @@ export default function EditLessonPage() {
   const [lesson, setLesson] = useState("");
   const [image, setImage] = useState("");
 
+  const [summary, setSummary] = useState("");
+const [profession, setProfession] = useState("");
+const [country, setCountry] = useState("");
+const [tags, setTags] = useState("");
+const [readingTime, setReadingTime] = useState("");
+
+const [price, setPrice] = useState(0);
+const [discount, setDiscount] = useState(0);
+
+const [isPremium, setIsPremium] = useState(false);
+const [certificate, setCertificate] = useState(false);
+
   useEffect(() => {
     const loadLesson = async () => {
       try {
@@ -32,6 +44,20 @@ export default function EditLessonPage() {
         setCategory(data.category);
         setStory(data.story);
         setLesson(data.lesson);
+
+        setSummary(data.summary || "");
+setProfession(data.profession || "");
+setCountry(data.country || "");
+
+setTags(data.tags?.join(", ") || "");
+
+setReadingTime(data.readingTime || "");
+
+setPrice(data.price || 0);
+setDiscount(data.discount || 0);
+
+setIsPremium(data.isPremium || false);
+setCertificate(data.certificate || false);
 
         setImage(data.image);
         setPreview(data.image);
@@ -67,12 +93,30 @@ export default function EditLessonPage() {
       }
 
       const lessonData = {
-        title,
-        category,
-        image: imageUrl,
-        story,
-        lesson,
-      };
+  title,
+  category,
+  image: imageUrl,
+  story,
+  lesson,
+  summary,
+
+  profession,
+  country,
+
+  tags: tags.split(",").map(tag => tag.trim()),
+
+  readingTime,
+
+  price: Number(price),
+  discount: Number(discount),
+
+  finalPrice:
+    Number(price) -
+    (Number(price) * Number(discount)) / 100,
+
+  isPremium,
+  certificate,
+};
       console.log(id);
       console.log(lessonData);
       await updatePublicLesson(id, lessonData);
@@ -188,6 +232,134 @@ export default function EditLessonPage() {
               onChange={(e) => setStory(e.target.value)}
               className="w-full border rounded-xl px-4 py-3 resize-none outline-none focus:ring-2 focus:ring-blue-500"
             />
+            <div>
+<label className="font-semibold block mb-2">
+ Short Summary
+</label>
+
+<textarea
+ rows={3}
+ value={summary}
+ onChange={(e)=>setSummary(e.target.value)}
+ placeholder="Short description of your lesson..."
+ className="w-full border rounded-xl px-4 py-3 resize-none outline-none focus:ring-2 focus:ring-blue-500"
+/>
+
+</div>
+
+<div className="grid md:grid-cols-2 gap-5">
+
+<div>
+<label className="font-semibold block mb-2">
+Profession
+</label>
+
+<input
+value={profession}
+onChange={(e)=>setProfession(e.target.value)}
+className="w-full border rounded-xl px-4 py-3"
+/>
+
+</div>
+
+
+<div>
+<label className="font-semibold block mb-2">
+Country
+</label>
+
+<input
+value={country}
+onChange={(e)=>setCountry(e.target.value)}
+className="w-full border rounded-xl px-4 py-3"
+/>
+
+</div>
+
+</div>
+
+<div>
+
+<label className="font-semibold block mb-2">
+Tags
+</label>
+
+
+<input
+value={tags}
+onChange={(e)=>setTags(e.target.value)}
+placeholder="Career, Success, Motivation"
+className="w-full border rounded-xl px-4 py-3"
+/>
+
+</div>
+
+<div className="grid md:grid-cols-2 gap-5">
+
+
+<div>
+
+<label className="font-semibold">
+Price
+</label>
+
+<input
+type="number"
+value={price}
+onChange={(e)=>setPrice(e.target.value)}
+className="w-full border rounded-xl px-4 py-3"
+/>
+
+</div>
+
+
+
+<div>
+
+<label className="font-semibold">
+Discount %
+</label>
+
+<input
+type="number"
+value={discount}
+onChange={(e)=>setDiscount(e.target.value)}
+className="w-full border rounded-xl px-4 py-3"
+/>
+
+</div>
+
+
+</div>
+
+<div className="flex gap-8">
+
+<label>
+<input
+type="checkbox"
+checked={isPremium}
+onChange={(e)=>setIsPremium(e.target.checked)}
+/>
+
+{" "} Premium Lesson
+
+</label>
+
+
+<label>
+
+<input
+type="checkbox"
+checked={certificate}
+onChange={(e)=>setCertificate(e.target.checked)}
+/>
+
+{" "} Certificate
+
+</label>
+
+
+</div>
           </div>
 
           <div>
