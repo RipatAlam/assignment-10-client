@@ -5,10 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Heart, MessageCircle, ArrowRight } from "lucide-react";
-import { getPublicLessonsHome } from "@/lib/lessonServer";
+import { getPublicLessonsHome, likeLesson } from "@/lib/lessonServer";
+import { useSession } from "@/lib/auth-client";
 
 export default function PublicLessonsHomePage() {
   const [publicLessonsData, setPublicLessonsData] = useState([]);
+  const { data } = useSession();
 
   useEffect(() => {
     const fetchLessons = async () => {
@@ -21,6 +23,34 @@ export default function PublicLessonsHomePage() {
     };
     fetchLessons();
   }, []);
+
+    //Like count korar jonno
+    const handleLike = async (lessonId) => {
+      if (!data?.user) {
+        alert("Please login first");
+        return;
+      }
+  
+      try {
+        const result = await likeLesson(lessonId, {
+          userId: data.user.id,
+          userName: data.user.name,
+          userEmail: data.user.email,
+        });
+  
+        if (result.success) {
+          setPublicLessonsData((prev) =>
+            prev.map((item) =>
+              item._id === lessonId ? { ...item, likes: item.likes + 1 } : item,
+            ),
+          );
+        } else {
+          alert(result.message);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
   return (
     <section className="max-w-7xl mx-auto w-full overflow-hidden">
@@ -82,7 +112,7 @@ export default function PublicLessonsHomePage() {
 
                 <div className="flex justify-between mt-7">
                   <div className="flex gap-5 text-gray-600">
-                    <div className="flex items-center gap-2">
+                    <div  onClick={() => handleLike(lesson._id)} className="flex items-center gap-2">
                       <Heart size={18} />
                       {lesson.likes}
                     </div>

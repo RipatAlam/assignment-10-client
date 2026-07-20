@@ -62,7 +62,6 @@ export default function PublicLessons() {
       console.log(error);
     }
   };
-  
 
   return (
     <section className="max-w-7xl mx-auto w-full overflow-hidden">
@@ -199,11 +198,8 @@ export default function PublicLessons() {
                     </span>
                   </div>
 
-                  <div
-                    onClick={handleLike}
-                    className="flex justify-between items-center mt-6 text-gray-600"
-                  >
-                    <div className="flex items-center gap-1">
+                  <div className="flex justify-between items-center mt-6 text-gray-600">
+                    <div  onClick={() => handleLike(lesson._id)} className="flex items-center gap-1">
                       <Heart size={16} />
                       {lesson.likes}
                     </div>

@@ -5,6 +5,7 @@ import LiveForeverPage from "@/components/LiveForever";
 import PercentagePage from "@/components/Percentage";
 import Percentage from "@/components/Percentage";
 import PublicLessonsHomePage from "@/components/PublicLessonsHomePage";
+import TestimonialsSection from "@/components/Testimonials";
 import TestimonialsPage from "@/components/Testimonials";
 import WhyDigitalLifeLessonsPage from "@/components/WhyDigitalLifeLessons";
 import Image from "next/image";
@@ -19,7 +20,7 @@ export default function Home() {
       <LastGenerationsPage />
       <WhyDigitalLifeLessonsPage />
       <LifeBenefits />
-      <TestimonialsPage />
+      <TestimonialsSection />
     </div>
   );
 }

@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Heart, Calendar, User, MessageCircle } from "lucide-react";
 import {
+  addComment,
   deletePublicLesson,
+  getComments,
   getPublicLessonsId,
   likeLesson,
 } from "@/lib/lessonServer";
@@ -20,6 +22,9 @@ export default function LessonDetails() {
 
   const router = useRouter();
   const { data } = useSession();
+
+  const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState("");
 
   useEffect(() => {
     const fetchLesson = async () => {
@@ -46,31 +51,71 @@ export default function LessonDetails() {
 
   //Like count korar jonno
   const handleLike = async () => {
-  if (!data?.user) {
-    alert("Please login first");
-    return;
-  }
-
-  try {
-    const result = await likeLesson(lesson._id, {
-      userId: data.user.id,
-      userName: data.user.name,
-      userEmail: data.user.email,
-    });
-
-    if (result.success) {
-      setLesson((prev) => ({
-        ...prev,
-        likes: prev.likes + 1,
-      }));
-    } else {
-      alert(result.message);
+    if (!data?.user) {
+      alert("Please login first");
+      return;
     }
-  } catch (error) {
-    console.log(error);
-  }
-};
 
+    try {
+      const result = await likeLesson(lesson._id, {
+        userId: data.user.id,
+        userName: data.user.name,
+        userEmail: data.user.email,
+      });
+
+      if (result.success) {
+        setLesson((prev) => ({
+          ...prev,
+          likes: prev.likes + 1,
+        }));
+      } else {
+        alert(result.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Comment add korar jonno
+  const handleComment = async () => {
+    if (!data?.user) {
+      alert("Please login first");
+      return;
+    }
+
+    if (!comment.trim()) {
+      alert("Please write a comment");
+      return;
+    }
+
+    try {
+      const result = await addComment(lesson._id, {
+        userId: data.user.id,
+        userName: data.user.name,
+        userEmail: data.user.email,
+        comment,
+      });
+
+      if (result.success) {
+        // নতুন comment load করবে
+        const updatedComments = await getComments(lesson._id);
+
+        setComments(updatedComments);
+
+        // comment count update
+        setLesson((prev) => ({
+          ...prev,
+          comments: prev.comments + 1,
+        }));
+
+        setComment("");
+      } else {
+        alert(result.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   //Delete korar jonno
   const handleDelete = async (id) => {
@@ -256,10 +301,12 @@ export default function LessonDetails() {
                 <p>{lesson.likes}</p>
               </div>
 
-              <div className="bg-white shadow rounded-xl p-4 text-center">
-                💬
-                <p>{lesson.comments}</p>
-              </div>
+              <Link href={`/dashboard/public-lessons/${lesson._id}/comments`}>
+                <div className="bg-white shadow rounded-xl p-4 text-center">
+                  💬
+                  <p>{lesson.comments}</p>
+                </div>
+              </Link>
 
               <div className="bg-white shadow rounded-xl p-4 text-center">
                 👁

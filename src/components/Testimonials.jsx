@@ -1,40 +1,11 @@
 "use client";
 
+import { getPublicComments } from "@/lib/lessonServer";
 import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
-
-// Testimonials Data
-const testimonials = [
-  {
-    id: 1,
-    name: "Sarah Johnson",
-    role: "Content Creator",
-    image: "/Images/users/user1.jpg",
-    review:
-      "This platform completely changed how I reflect on my life experiences. Every lesson shared here feels meaningful and inspiring.",
-  },
-  {
-    id: 2,
-    name: "David Smith",
-    role: "Software Engineer",
-    image: "/Images/users/user2.jpg",
-    review:
-      "A clean and powerful way to document life lessons. Reading real experiences has helped me make better personal decisions.",
-  },
-  {
-    id: 3,
-    name: "Emily Carter",
-    role: "Student",
-    image: "/Images/users/user3.jpg",
-    review:
-      "Learning from other people's experiences has never been this easy. I visit this platform almost every day.",
-  },
-];
-
-const homeTestimonials =  testimonials.slice(0, 3); // Get the first three testimonials for the home page
+import { useEffect, useState } from "react";
 
 // Animation Variants
 const container = {
@@ -61,6 +32,19 @@ const card = {
 };
 
 export default function TestimonialsSection() {
+  // Testimonials Data
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    const loadComments = async () => {
+      const data = await getPublicComments();
+      console.log(data);
+      setComments(data);
+    };
+
+    loadComments();
+  }, []);
+
   return (
     <section className="bg-[#F9F7F3] max-w-7xl mx-auto px-6 sm:px-8 lg:px-8 py-20">
       {/* Heading */}
@@ -81,51 +65,46 @@ export default function TestimonialsSection() {
         </h2>
 
         <p className="mt-6 text-gray-600 text-lg leading-8">
-          Discover authentic experiences shared by learners, creators,
-          and dreamers around the world.
+          Discover authentic experiences shared by learners, creators, and
+          dreamers around the world.
         </p>
       </motion.div>
 
       {/* Cards */}
 
-       <motion.div
+      <motion.div
         variants={container}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16"
       >
-        {homeTestimonials.map((item) => (
+        {comments.map((item) => (
           <motion.div
-            key={item.id}
+            key={item._id}
             variants={card}
-            whileHover={{
-              y: -10,
-              scale: 1.03,
-            }}
+            whileHover={{ y: -10, scale: 1.03 }}
             className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 hover:border-blue-200 transition-all duration-300"
           >
             <Quote className="w-12 h-12 text-blue-500 mb-6" />
 
-            <p className="text-gray-600 leading-8 italic">
-              "{item.review}"
-            </p>
+            <p className="text-gray-600 leading-8 italic">"{item.comment}"</p>
 
             <div className="flex items-center gap-4 mt-8">
               <Image
-                src={item.image}
+                src={item.userImage || "/Images/users/user1.jpg"}
                 width={60}
                 height={60}
-                alt={item.name}
+                alt={item.userName}
                 className="rounded-full object-cover"
               />
 
               <div>
                 <h3 className="font-bold text-lg text-[#231815]">
-                  {item.name}
+                  {item.userName}
                 </h3>
 
-                <p className="text-gray-500 text-sm">{item.role}</p>
+                <p className="text-gray-500 text-sm">Community Member</p>
               </div>
             </div>
           </motion.div>
@@ -141,7 +120,7 @@ export default function TestimonialsSection() {
         className="flex justify-center mt-14"
       >
         <Link
-          href="/testimonials"
+          href="/TestomonialComments"
           className="group bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105"
         >
           View All Reviews

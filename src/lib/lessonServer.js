@@ -127,7 +127,7 @@ export const updatePublicLesson = async (id, lessonData) => {
   return data;
 };
 
-//Like count 
+//Like count korar jonno
 export const likeLesson = async (lessonId, userData) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons/like/${lessonId}`,
@@ -139,6 +139,45 @@ export const likeLesson = async (lessonId, userData) => {
       body: JSON.stringify(userData),
     }
   );
+
+  return await res.json();
+};
+
+
+//Comment ADD korar Jonno
+export const addComment = async (lessonId, commentData) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons/comment/${lessonId}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(commentData),
+    }
+  );
+
+  return await res.json();
+};
+
+//Comment Power Jonno
+export const getComments = async (lessonId) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons/comments/${lessonId}`
+  );
+
+  return await res.json();
+};
+
+//TestimonialsSection Comment Show
+export const getPublicComments = async () => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/public-comments`
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch comments");
+  }
 
   return await res.json();
 };
