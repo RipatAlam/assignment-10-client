@@ -126,3 +126,19 @@ export const updatePublicLesson = async (id, lessonData) => {
 
   return data;
 };
+
+//Like count 
+export const likeLesson = async (lessonId, userData) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons/like/${lessonId}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    }
+  );
+
+  return await res.json();
+};

@@ -3,12 +3,15 @@ import Image from "next/image";
 import { Heart, MessageCircle, ArrowRight, Search } from "lucide-react";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { getPublicLessons } from "@/lib/lessonServer";
+import { getPublicLessons, likeLesson } from "@/lib/lessonServer";
 import Link from "next/link";
+import { useSession } from "@/lib/auth-client";
 
 export default function PublicLessons() {
   const [search, setSearch] = useState("");
   const [publicLessonsData, setPublicLessonsData] = useState([]);
+
+  const { data } = useSession();
 
   useEffect(() => {
     const fetchLessons = async () => {
@@ -31,6 +34,35 @@ export default function PublicLessons() {
       lesson.name?.toLowerCase().includes(searchTerm)
     );
   });
+
+  //Like count korar jonno
+  const handleLike = async (lessonId) => {
+    if (!data?.user) {
+      alert("Please login first");
+      return;
+    }
+
+    try {
+      const result = await likeLesson(lessonId, {
+        userId: data.user.id,
+        userName: data.user.name,
+        userEmail: data.user.email,
+      });
+
+      if (result.success) {
+        setPublicLessonsData((prev) =>
+          prev.map((item) =>
+            item._id === lessonId ? { ...item, likes: item.likes + 1 } : item,
+          ),
+        );
+      } else {
+        alert(result.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
 
   return (
     <section className="max-w-7xl mx-auto w-full overflow-hidden">
@@ -167,7 +199,10 @@ export default function PublicLessons() {
                     </span>
                   </div>
 
-                  <div className="flex justify-between items-center mt-6 text-gray-600">
+                  <div
+                    onClick={handleLike}
+                    className="flex justify-between items-center mt-6 text-gray-600"
+                  >
                     <div className="flex items-center gap-1">
                       <Heart size={16} />
                       {lesson.likes}

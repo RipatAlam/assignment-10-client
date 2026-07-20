@@ -3,9 +3,14 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Heart, Calendar, User, MessageCircle } from "lucide-react";
-import { deletePublicLesson, getPublicLessonsId } from "@/lib/lessonServer";
+import {
+  deletePublicLesson,
+  getPublicLessonsId,
+  likeLesson,
+} from "@/lib/lessonServer";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import { useSession } from "@/lib/auth-client";
 
 export default function LessonDetails() {
   const { id } = useParams();
@@ -14,6 +19,7 @@ export default function LessonDetails() {
   const [showFullStory, setShowFullStory] = useState(false);
 
   const router = useRouter();
+  const { data } = useSession();
 
   useEffect(() => {
     const fetchLesson = async () => {
@@ -38,6 +44,35 @@ export default function LessonDetails() {
     );
   }
 
+  //Like count korar jonno
+  const handleLike = async () => {
+  if (!data?.user) {
+    alert("Please login first");
+    return;
+  }
+
+  try {
+    const result = await likeLesson(lesson._id, {
+      userId: data.user.id,
+      userName: data.user.name,
+      userEmail: data.user.email,
+    });
+
+    if (result.success) {
+      setLesson((prev) => ({
+        ...prev,
+        likes: prev.likes + 1,
+      }));
+    } else {
+      alert(result.message);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+  //Delete korar jonno
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this lesson?",
@@ -196,27 +231,27 @@ export default function LessonDetails() {
             </div>
 
             {/* Action Buttons */}
-            <Link
-              href={`/dashboard/my-lessons/edit-lesson/${lesson._id}`}
-            >
-              
-            <div className="mt-10 flex gap-4">
-              <button className="flex-1 bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105 shadow-md">
-                ✏️ Edit Lesson
-              </button>
+            <Link href={`/dashboard/my-lessons/edit-lesson/${lesson._id}`}>
+              <div className="mt-10 flex gap-4">
+                <button className="flex-1 bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105 shadow-md">
+                  ✏️ Edit Lesson
+                </button>
 
-              <button
-                onClick={() => handleDelete(lesson._id)}
-                className="flex-1 bg-red-600 hover:bg-red-700 text-white py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105 shadow-md"
-              >
-                🗑 Delete Lesson
-              </button>
-            </div>
+                <button
+                  onClick={() => handleDelete(lesson._id)}
+                  className="flex-1 bg-red-600 hover:bg-red-700 text-white py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105 shadow-md"
+                >
+                  🗑 Delete Lesson
+                </button>
+              </div>
             </Link>
 
             {/* Bottom Info */}
             <div className="grid grid-cols-4 gap-4 mt-10">
-              <div className="bg-white shadow rounded-xl p-4 text-center">
+              <div
+                onClick={handleLike}
+                className="bg-white shadow rounded-xl p-4 text-center cursor-pointer hover:bg-red-50 transition"
+              >
                 ❤️
                 <p>{lesson.likes}</p>
               </div>

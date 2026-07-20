@@ -36,7 +36,7 @@ export default function AddLessonPage() {
 
   const user = data?.user;
   console.log(data);
-console.log(data?.user);
+  console.log(data?.user);
 
   const handleImagePreview = (e) => {
     const file = e.target.files[0];
@@ -49,6 +49,11 @@ console.log(data?.user);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!image) {
+      alert("Please upload an image");
+      return;
+    }
 
     try {
       // 1. Upload image to ImgBB
