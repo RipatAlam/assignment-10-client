@@ -38,7 +38,6 @@ export default function TestimonialsSection() {
   useEffect(() => {
     const loadComments = async () => {
       const data = await getPublicComments();
-      console.log(data);
       setComments(data);
     };
 
@@ -79,7 +78,7 @@ export default function TestimonialsSection() {
         viewport={{ once: true }}
         className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16"
       >
-        {comments.map((item) => (
+        {comments.slice(0, 3).map((item) => (
           <motion.div
             key={item._id}
             variants={card}
@@ -120,7 +119,7 @@ export default function TestimonialsSection() {
         className="flex justify-center mt-14"
       >
         <Link
-          href="/TestomonialComments"
+          href="/testimonials"
           className="group bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105"
         >
           View All Reviews

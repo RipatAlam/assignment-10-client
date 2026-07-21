@@ -199,15 +199,21 @@ export default function PublicLessons() {
                   </div>
 
                   <div className="flex justify-between items-center mt-6 text-gray-600">
-                    <div  onClick={() => handleLike(lesson._id)} className="flex items-center gap-1">
+                    <div
+                      onClick={() => handleLike(lesson._id)}
+                      className="flex items-center gap-1"
+                    >
                       <Heart size={16} />
                       {lesson.likes}
                     </div>
 
-                    <div className="flex items-center gap-1">
+                    <Link
+                      href={`/dashboard/public-lessons/${lesson._id}/comments`}
+                      className="flex items-center gap-1 hover:text-blue-600"
+                    >
                       <MessageCircle size={16} />
                       {lesson.comments}
-                    </div>
+                    </Link>
 
                     <div className="flex items-center gap-1">
                       👁 {lesson.views}

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft, Send } from "lucide-react";
 
 import { useSession } from "@/lib/auth-client";
@@ -22,6 +22,8 @@ export default function CommentsPage() {
   const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(true);
 
+  const router = useRouter();
+
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -29,6 +31,7 @@ export default function CommentsPage() {
         setLesson(lessonData);
 
         const commentsData = await getComments(id);
+        console.log(commentsData, "commentData")
         setComments(commentsData);
       } catch (error) {
         console.log(error);
@@ -41,6 +44,7 @@ export default function CommentsPage() {
   }, [id]);
 
   const handleComment = async () => {
+    console.log("User data: ",data?.user);
     if (!data?.user) {
       alert("Please login first");
       return;
@@ -56,6 +60,7 @@ export default function CommentsPage() {
         userId: data.user.id,
         userName: data.user.name,
         userEmail: data.user.email,
+        userImage: data.user.image,
         comment,
       });
 
@@ -71,6 +76,7 @@ export default function CommentsPage() {
         setComment("");
 
         alert("Comment added successfully.");
+        router.push("/testimonials");
       } else {
         alert(result.message);
       }
@@ -88,7 +94,7 @@ export default function CommentsPage() {
   }
 
   return (
-    <section className="max-w-5xl mx-auto py-10 px-5">
+    <section className="bg-[#F8F4EE] max-w-7xl mx-auto py-10 px-5">
       <Link
         href={`/dashboard/public-lessons/${id}`}
         className="inline-flex items-center gap-2 text-blue-600 font-semibold hover:underline mb-8"
@@ -161,10 +167,21 @@ export default function CommentsPage() {
                   className="border rounded-2xl p-5 hover:shadow-md transition"
                 >
                   <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="font-bold text-lg">{item.userName}</h3>
+                    <div className="flex items-center gap-4">
+                      <Image
+                        src={item.userImage || "/Images/users/user1.jpg"}
+                        alt={item.userName}
+                        width={50}
+                        height={50}
+                        className="w-12 h-12 rounded-full object-cover"
+                      />
 
-                      <p className="text-sm text-gray-400">{item.userEmail}</p>
+                      <div>
+                        <h3 className="font-bold text-lg">{item.userName}</h3>
+                        <p className="text-sm text-gray-400">
+                          {item.userEmail}
+                        </p>
+                      </div>
                     </div>
 
                     <span className="text-xs text-gray-400">

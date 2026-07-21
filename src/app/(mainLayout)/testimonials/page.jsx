@@ -14,6 +14,7 @@ export default function TestimonialCommentsPage() {
     const loadComments = async () => {
       try {
         const data = await getPublicComments();
+        console.log("Comments:", data);
         setComments(data);
       } catch (error) {
         console.log(error);
@@ -34,9 +35,8 @@ export default function TestimonialCommentsPage() {
   }
 
   return (
-    <section className="bg-[#F9F7F3] min-h-screen py-20 px-6">
+    <section className="bg-[#F9F7F3] min-h-screen max-w-7xl mx-auto py-20 px-6">
       <div className="max-w-7xl mx-auto">
-
         {/* Header */}
         <div className="text-center mb-14">
           <p className="uppercase tracking-[4px] text-[#C9794D] text-sm font-semibold">
@@ -52,7 +52,6 @@ export default function TestimonialCommentsPage() {
           </p>
         </div>
 
-
         {/* Back Button */}
         <Link
           href="/"
@@ -62,64 +61,44 @@ export default function TestimonialCommentsPage() {
           Back Home
         </Link>
 
-
         {/* Comments */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-
           {comments.map((item) => (
             <div
               key={item._id}
               className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 hover:-translate-y-2 transition-all duration-300"
             >
-
               <Quote className="w-12 h-12 text-blue-500 mb-6" />
 
-              <p className="text-gray-600 leading-8 italic">
-                "{item.comment}"
-              </p>
-
+              <p className="text-gray-600 leading-8 italic">"{item.comment}"</p>
 
               <div className="flex items-center gap-4 mt-8">
-
                 <Image
-                  src={
-                    item.image ||
-                    "/Images/users/user1.jpg"
-                  }
+                  src={item.userImage || "/Images/users/user1.jpg"}
                   width={60}
                   height={60}
-                  alt={item.name || "User"}
+                  alt={item.userName || "User"}
                   className="rounded-full object-cover w-[60px] h-[60px]"
                 />
 
-
                 <div>
                   <h3 className="font-bold text-lg text-[#231815]">
-                    {item.name}
+                    {item.userName}
                   </h3>
 
-                  <p className="text-gray-500 text-sm">
-                    Community Member
-                  </p>
+                  <p className="text-gray-500 text-sm">Community Member</p>
                 </div>
-
               </div>
-
             </div>
           ))}
-
         </div>
-
 
         {/* Empty State */}
         {comments.length === 0 && (
           <div className="text-center py-20">
-            <p className="text-gray-500">
-              No reviews found.
-            </p>
+            <p className="text-gray-500">No reviews found.</p>
           </div>
         )}
-
       </div>
     </section>
   );

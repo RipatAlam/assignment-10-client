@@ -169,7 +169,7 @@ export const getComments = async (lessonId) => {
   return await res.json();
 };
 
-//TestimonialsSection Comment Show
+//Testimonials.jsx 3ta Comment Show
 export const getPublicComments = async () => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/public-comments`
@@ -181,3 +181,5 @@ export const getPublicComments = async () => {
 
   return await res.json();
 };
+
+//app/(mainLayout)/testimonials/page.jsx e sob comment dekabe
