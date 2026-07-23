@@ -8,27 +8,59 @@ const db = client.db(process.env.PROJECT_ID);
 export const auth = betterAuth({
   database: mongodbAdapter(db, {
     // Optional: if you don't provide a client, database transactions won't be enabled.
-    client
+    client,
   }),
 
-  emailAndPassword: { 
-    enabled: true, 
-  }, 
-  socialProviders: { 
-    google: { 
+  emailAndPassword: {
+    enabled: true,
+  },
+  socialProviders: {
+    google: {
       clientId: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET, 
-    }, 
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    },
   },
 
   user: {
     additionalFields: {
       role: {
-        defaultValue: "user"
+        type: "string",
+        defaultValue: "user",
       },
+
       isBlocked: {
-        defaultValue: false
-      }
-    }
-  }
+        type: "boolean",
+        defaultValue: false,
+      },
+
+      profession: {
+        type: "string",
+        defaultValue: "",
+      },
+
+      country: {
+        type: "string",
+        defaultValue: "",
+      },
+
+      phone: {
+        type: "string",
+        defaultValue: "",
+      },
+
+      bio: {
+        type: "string",
+        defaultValue: "",
+      },
+      receiveLessonUpdates: {
+        type: "boolean",
+        defaultValue: true,
+      },
+
+      receiveNewsletter: {
+        type: "boolean",
+        defaultValue: true,
+      },
+    },
+  },
 });

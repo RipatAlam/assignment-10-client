@@ -8,11 +8,13 @@ import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { uploadImage } from "@/lib/uploadImage";
 
-
 export default function SignUpPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  const [receiveLessonUpdates, setReceiveLessonUpdates] = useState(true);
+  const [receiveNewsletter, setReceiveNewsletter] = useState(true);
 
   const {
     register,
@@ -33,7 +35,6 @@ export default function SignUpPage() {
         return;
       }
 
-
       if (data.password !== data.confirmPassword) {
         setError("Passwords do not match");
         return;
@@ -44,8 +45,16 @@ export default function SignUpPage() {
         email: data.email,
         password: data.password,
         image: imageUrl,
-      });
+        role: data.role,
 
+        profession: data.profession,
+        country: data.country,
+        phone: data.phone,
+        bio: data.bio,
+
+        receiveLessonUpdates: data.receiveLessonUpdates,
+        receiveNewsletter: data.receiveNewsletter,
+      });
 
       if (authError) {
         setError(authError.message || "Sign up failed. Please try again.");
@@ -57,7 +66,7 @@ export default function SignUpPage() {
       alert("Account created successfully!");
       router.push("/security/login");
     } catch (err) {
-      console.log(authError);
+      console.log(err);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -163,6 +172,39 @@ export default function SignUpPage() {
                 className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
 
+              <div className="grid md:grid-cols-2 gap-4">
+                <input
+                  {...register("profession")}
+                  placeholder="Profession"
+                  className="w-full border rounded-xl px-4 py-3"
+                />
+
+                <input
+                  {...register("country")}
+                  placeholder="Country"
+                  className="w-full border rounded-xl px-4 py-3"
+                />
+              </div>
+
+              <div className="mt-4">
+                <input
+                  {...register("phone")}
+                  placeholder="Phone Number"
+                  className="w-full border rounded-xl px-4 py-3"
+                />
+              </div>
+
+              <div className="mt-4">
+                <textarea
+                  {...register("bio")}
+                  rows={3}
+                  placeholder="Short Bio"
+                  className="w-full border rounded-xl px-4 py-3"
+                />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-800 border-b pb-2 mt-6">
+                Security
+              </h3>
               <input
                 {...register("password", {
                   required: "Password is required",
@@ -213,6 +255,9 @@ export default function SignUpPage() {
               )}
 
               {/* Profile Image URL */}
+              <h3 className="text-lg font-semibold text-gray-800 border-b pb-2 mt-6">
+                Profile Picture
+              </h3>
               <input
                 {...register("image", {
                   required: "Profile image is required",
@@ -225,23 +270,76 @@ export default function SignUpPage() {
               {errors.image && (
                 <p className="text-red-500 text-sm">{errors.image.message}</p>
               )}
+              <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 space-y-3">
+                <h3 className="font-semibold text-gray-800">
+                  Community Preferences
+                </h3>
 
-              {/* ✅ NEW: Role selection */}
-              <div>
-                <label
-                  htmlFor="role"
-                  className="text-sm font-medium text-gray-700 mb-1 block"
-                >
-                  Select Role
-                </label>
-                <select
-                  {...register("role", { required: "Role is required" })}
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="user">User</option>
-                  <option value="admin">Admin</option>
-                </select>
+                <div className="space-y-4 mt-6">
+                  <label className="flex items-center gap-3">
+                    <input
+                      type="checkbox"
+                      checked={receiveLessonUpdates}
+                      onChange={(e) =>
+                        setReceiveLessonUpdates(e.target.checked)
+                      }
+                    />
+                    Receive lesson updates
+                  </label>
+
+                  <label className="flex items-center gap-3">
+                    <input
+                      type="checkbox"
+                      checked={receiveNewsletter}
+                      onChange={(e) => setReceiveNewsletter(e.target.checked)}
+                    />
+                    Receive newsletters
+                  </label>
+                </div>
               </div>
+
+              {/* Account Type */}
+              <h3 className="text-lg font-semibold text-gray-800 border-b pb-2 mt-6">
+                Account Type
+              </h3>
+
+              <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mt-3 space-y-3">
+                <label className="flex items-center gap-3 cursor-pointer">
+                  <input
+                    {...register("role")}
+                    type="radio"
+                    value="user"
+                    defaultChecked
+                    className="w-4 h-4"
+                  />
+
+                  <div>
+                    <h4 className="font-semibold text-gray-800">User</h4>
+
+                    <p className="text-sm text-gray-500">
+                      Share lessons, read stories and join the community.
+                    </p>
+                  </div>
+                </label>
+
+                <label className="flex items-center gap-3 cursor-pointer">
+                  <input
+                    {...register("role")}
+                    type="radio"
+                    value="admin"
+                    className="w-4 h-4"
+                  />
+
+                  <div>
+                    <h4 className="font-semibold text-gray-800">Admin</h4>
+
+                    <p className="text-sm text-gray-500">
+                      Manage users, lessons and website content.
+                    </p>
+                  </div>
+                </label>
+              </div>
+              {/* ✅ NEW: Role selection */}
 
               <div className="flex items-start gap-3">
                 <input type="checkbox" id="terms" required className="mt-1" />

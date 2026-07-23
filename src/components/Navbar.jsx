@@ -233,13 +233,21 @@ export default function Navbar({ user, plan = "free" }) {
                           </button>
 
                           {dashboardOpen && (
-                            <div className="ml-4 flex flex-col gap-2 border-l pl-3">
+                            <div className="ml-4 flex flex-col gap-2 border-l border-[#2563eb]/30 pl-3 mt-2">
                               <Link
-                                onClick={closeMobile}
                                 href="/dashboardfile/user"
-                                className="px-3 py-2 rounded-lg text-slate-300 hover:bg-[#0d1728] hover:text-[#2563eb] text-sm transition-all font-serif"
+                                onClick={() => setOpen(false)}
+                                className="px-3 py-2 rounded-lg text-slate-300 hover:bg-[#0d1728] hover:text-[#2563eb] text-sm transition-all font-serif flex items-center gap-2"
                               >
                                 👤 User
+                              </Link>
+
+                              <Link
+                                href="/dashboardfile/admin"
+                                onClick={() => setOpen(false)}
+                                className="px-3 py-2 rounded-lg text-slate-300 hover:bg-[#0d1728] hover:text-[#2563eb] text-sm transition-all font-serif flex items-center gap-2"
+                              >
+                                🛠️ Admin
                               </Link>
                             </div>
                           )}
@@ -290,7 +298,9 @@ export default function Navbar({ user, plan = "free" }) {
               >
                 {/* Header */}
                 <div className="flex items-center justify-between border-b border-[#0d1728] pb-4">
-                  <h2 className="font-semibold font-serif text-lg text-white">Menu</h2>
+                  <h2 className="font-semibold font-serif text-lg text-white">
+                    Menu
+                  </h2>
                   <button
                     onClick={closeMobile}
                     className="text-slate-300 text-white hover:text-[#2563eb]"
@@ -414,7 +424,9 @@ export default function Navbar({ user, plan = "free" }) {
                           <p className="text-sm font-serif font-semibold text-white">
                             {session.user.name}
                           </p>
-                          <p className="text-xs text-slate-400 font-serif">Logged in</p>
+                          <p className="text-xs text-slate-400 font-serif">
+                            Logged in
+                          </p>
                         </div>
                       </div>
 

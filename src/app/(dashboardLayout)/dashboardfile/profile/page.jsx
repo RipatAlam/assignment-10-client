@@ -24,6 +24,11 @@ export default function ProfilePage() {
 
   const [isEdit, setIsEdit] = useState(false);
 
+  const [profession, setProfession] = useState("");
+  const [country, setCountry] = useState("");
+  const [phone, setPhone] = useState("");
+  const [bio, setBio] = useState("");
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [image, setImage] = useState("");
@@ -34,6 +39,10 @@ export default function ProfilePage() {
       setName(user.name || "");
       setEmail(user.email || "");
       setImage(user.image || "");
+      setProfession(user.profession || "");
+      setCountry(user.country || "");
+      setPhone(user.phone || "");
+      setBio(user.bio || "");
     }
   }, [user]);
 
@@ -48,6 +57,10 @@ export default function ProfilePage() {
         email,
         image,
         password,
+        profession,
+        country,
+        phone,
+        bio,
       });
 
       if (data.success) {
@@ -205,6 +218,30 @@ export default function ProfilePage() {
           </div>
         </div>
       </div>
+
+      <div className="grid md:grid-cols-2 gap-4 mt-6">
+
+  <div className="bg-blue-50 p-4 rounded-xl">
+    <p className="text-sm text-gray-500">Profession</p>
+    <h3 className="font-semibold">{profession || "Not Added"}</h3>
+  </div>
+
+  <div className="bg-blue-50 p-4 rounded-xl">
+    <p className="text-sm text-gray-500">Country</p>
+    <h3 className="font-semibold">{country || "Not Added"}</h3>
+  </div>
+
+  <div className="bg-blue-50 p-4 rounded-xl">
+    <p className="text-sm text-gray-500">Phone</p>
+    <h3 className="font-semibold">{phone || "Not Added"}</h3>
+  </div>
+
+  <div className="bg-blue-50 p-4 rounded-xl">
+    <p className="text-sm text-gray-500">Bio</p>
+    <h3 className="font-semibold">{bio || "Not Added"}</h3>
+  </div>
+
+</div>
 
       {/* Story Section */}
 

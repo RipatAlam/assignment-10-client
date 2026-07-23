@@ -64,7 +64,6 @@ export const updateProfile = async (id, { name, email, image, password }) => {
   return data;
 };
 
-//Add Lesson
 // Add Public Lesson
 export const addPublicLesson = async (lessonData) => {
   const res = await fetch(
@@ -137,12 +136,11 @@ export const likeLesson = async (lessonId, userData) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(userData),
-    }
+    },
   );
 
   return await res.json();
 };
-
 
 //Comment ADD korar Jonno
 export const addComment = async (lessonId, commentData) => {
@@ -154,7 +152,7 @@ export const addComment = async (lessonId, commentData) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(commentData),
-    }
+    },
   );
 
   return await res.json();
@@ -163,7 +161,7 @@ export const addComment = async (lessonId, commentData) => {
 //Comment Power Jonno
 export const getComments = async (lessonId) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons/comments/${lessonId}`
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons/comments/${lessonId}`,
   );
 
   return await res.json();
@@ -172,7 +170,7 @@ export const getComments = async (lessonId) => {
 //Testimonials.jsx 3ta Comment Show
 export const getPublicComments = async () => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/public-comments`
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/public-comments`,
   );
 
   if (!res.ok) {
@@ -188,7 +186,7 @@ export const deleteComment = async (id) => {
     `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons/comment/${id}`,
     {
       method: "DELETE",
-    }
+    },
   );
 
   return await res.json();
@@ -204,8 +202,75 @@ export const updateComment = async (id, comment) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ comment }),
-    }
+    },
   );
+
+  return await res.json();
+};
+
+// Approve Lesson
+export const approveLesson = async (id) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons/approve/${id}`,
+    {
+      method: "PATCH",
+    },
+  );
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message || "Failed to approve lesson");
+  }
+
+  return data;
+};
+
+//Unapprove lesson
+export const unapproveLesson = async (id) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons/unapprove/${id}`,
+    {
+      method: "PATCH",
+    },
+  );
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message || "Failed to unapprove lesson");
+  }
+
+  return data;
+};
+
+// Publish Lesson
+export const publishLesson = async (id) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons/publish/${id}`,
+    {
+      method: "PATCH",
+    },
+  );
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message || "Failed to publish lesson");
+  }
+
+  return data;
+};
+
+// Admin - All Lessons
+export const getAdminLessons = async () => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/admin/public-lessons`,
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch admin lessons");
+  }
 
   return await res.json();
 };

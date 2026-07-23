@@ -101,7 +101,7 @@ export default function AddLessonPage() {
         rating: 0,
 
         featured: false,
-        status: "published",
+        status: "Pending",
 
         createdAt: new Date(),
         updatedAt: new Date(),
