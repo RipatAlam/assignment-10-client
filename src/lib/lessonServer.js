@@ -274,3 +274,16 @@ export const getAdminLessons = async () => {
 
   return await res.json();
 };
+
+//< 1 2 3 4 5 > page
+export const getPaginatedPublicLessons = async (page = 1) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons?page=${page}&limit=12`
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch public lessons");
+  }
+
+  return await res.json();
+};

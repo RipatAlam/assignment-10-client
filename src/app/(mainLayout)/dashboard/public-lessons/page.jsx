@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Heart, MessageCircle, ArrowRight, Search } from "lucide-react";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { getPublicLessons, likeLesson } from "@/lib/lessonServer";
+import { getPaginatedPublicLessons, likeLesson } from "@/lib/lessonServer";
 import Link from "next/link";
 import { useSession } from "@/lib/auth-client";
 
@@ -11,19 +11,27 @@ export default function PublicLessons() {
   const [search, setSearch] = useState("");
   const [publicLessonsData, setPublicLessonsData] = useState([]);
 
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
   const { data } = useSession();
 
   useEffect(() => {
     const fetchLessons = async () => {
       try {
-        const data = await getPublicLessons();
-        setPublicLessonsData(data);
+        const data = await getPaginatedPublicLessons(page);
+
+        console.log(data);
+
+        setPublicLessonsData(data.lessons || []);
+        setTotalPages(data.totalPages || 1);
       } catch (error) {
         console.error("Fetch Error:", error);
       }
     };
+
     fetchLessons();
-  }, []);
+  }, [page]);
 
   const filteredLessons = publicLessonsData.filter((lesson) => {
     const searchTerm = (search || "").toLowerCase();
@@ -240,9 +248,33 @@ export default function PublicLessons() {
           )}
         </div>
 
-        <div className="text-center mt-16">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-semibold transition">
-            View All Lessons
+        <div className="flex justify-center items-center gap-2 mt-16">
+          <button
+            disabled={page === 1}
+            onClick={() => setPage(page - 1)}
+            className="px-4 py-2 border rounded-lg disabled:opacity-40"
+          >
+            &lt;
+          </button>
+
+          {[...Array(totalPages)].map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setPage(index + 1)}
+              className={`px-4 py-2 rounded-lg ${
+                page === index + 1 ? "bg-blue-600 text-white" : "border"
+              }`}
+            >
+              {index + 1}
+            </button>
+          ))}
+
+          <button
+            disabled={page === totalPages}
+            onClick={() => setPage(page + 1)}
+            className="px-4 py-2 border rounded-lg disabled:opacity-40"
+          >
+            &gt;
           </button>
         </div>
       </div>
