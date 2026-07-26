@@ -26,7 +26,7 @@ export default function MyLessonsPage() {
     const loadLessons = async () => {
       try {
         const data = await getPublicLessons();
-        setLessons(data);
+        setLessons(data.lessons || []);
       } catch (error) {
         console.log(error);
       } finally {

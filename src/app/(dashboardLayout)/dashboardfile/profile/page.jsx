@@ -1,48 +1,83 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import {
-  User,
-  Mail,
-  Shield,
-  Edit3,
-  Save,
-  Lock,
-  BookOpen,
-  Heart,
-  Camera,
-} from "lucide-react";
+import Link from "next/link";
+import { Mail, Shield, BookOpen, Heart, Edit3 } from "lucide-react";
 import { useSession } from "@/lib/auth-client";
-import { updateProfile } from "@/lib/lessonServer";
+import { getPaginatedPublicLessons, getProfileStory } from "@/lib/lessonServer";
+import { motion } from "framer-motion";
 
 export default function ProfilePage() {
-  const [activeTab, setActiveTab] = useState("story");
   const { data: session, isPending } = useSession();
 
   const user = session?.user;
 
-  const [isEdit, setIsEdit] = useState(false);
+  const [story, setStory] = useState("");
 
-  const [profession, setProfession] = useState("");
-  const [country, setCountry] = useState("");
-  const [phone, setPhone] = useState("");
-  const [bio, setBio] = useState("");
+  const [lessonCount, setLessonCount] = useState(0);
+  const [totalLikes, setTotalLikes] = useState(0);
+  const [profileComplete, setProfileComplete] = useState(0);
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [image, setImage] = useState("");
-  const [password, setPassword] = useState("");
+  //story get
+  useEffect(() => {
+    if (!user) return;
 
+    const loadStory = async () => {
+      const data = await getProfileStory(user.id);
+
+      if (data.success && data.story) {
+        setStory(data.story.story);
+      }
+    };
+
+    loadStory();
+  }, [user]);
+
+  //Total lessons & Likes count
+  useEffect(() => {
+    const loadLessonStats = async () => {
+      const data = await getPaginatedPublicLessons();
+
+      if (data) {
+        // Total Lessons
+        if (data.totalLessons) {
+          setLessonCount(data.totalLessons);
+        }
+
+        // Total Likes
+        if (data.lessons) {
+          const likes = data.lessons.reduce(
+            (total, lesson) => total + (lesson.likes || 0),
+            0,
+          );
+
+          setTotalLikes(likes);
+        }
+      }
+    };
+
+    loadLessonStats();
+  }, []);
+
+  //Strong er kaj
   useEffect(() => {
     if (user) {
-      setName(user.name || "");
-      setEmail(user.email || "");
-      setImage(user.image || "");
-      setProfession(user.profession || "");
-      setCountry(user.country || "");
-      setPhone(user.phone || "");
-      setBio(user.bio || "");
+      const fields = [
+        user.name,
+        user.email,
+        user.image,
+        user.profession,
+        user.country,
+        user.phone,
+        user.bio,
+      ];
+
+      const completed = fields.filter(Boolean).length;
+
+      const percentage = Math.round((completed / fields.length) * 100);
+
+      setProfileComplete(percentage);
     }
   }, [user]);
 
@@ -50,53 +85,53 @@ export default function ProfilePage() {
     return <div className="flex justify-center py-20">Loading...</div>;
   }
 
-  const handleSave = async () => {
-    try {
-      const data = await updateProfile(user.id || user._id, {
-        name,
-        email,
-        image,
-        password,
-        profession,
-        country,
-        phone,
-        bio,
-      });
-
-      if (data.success) {
-        alert("Profile Updated Successfully");
-        setIsEdit(false);
-        setPassword("");
-      }
-    } catch (error) {
-      console.log(error);
-      alert("Update Failed");
-    }
+  //Motion add
+  const fadeUp = {
+    hidden: {
+      opacity: 0,
+      y: 40,
+    },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+      },
+    },
+  };
+  //Motion add
+  const container = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
       {/* Profile Card */}
 
-      <div className="bg-[#f9f5f4] rounded-[35px] p-8 shadow-lg">
+      <motion.div
+        variants={fadeUp}
+        initial="hidden"
+        animate="show"
+        className="bg-[#f9f5f4] rounded-[35px] p-5 sm:p-8 shadow-lg"
+      >
         <div className="grid lg:grid-cols-4 gap-10">
           {/* Left */}
 
           <div className="flex flex-col items-center">
             <div className="relative">
               <Image
-                src={image || "https://i.ibb.co/LXb1G6H/user.png"}
+                src={user?.image || "https://i.ibb.co/LXb1G6H/user.png"}
                 alt="profile"
                 width={180}
                 height={180}
-                className="rounded-full object-cover border-4 border-white shadow-lg"
+                priority
+                className="w-32 h-32 sm:w-40 sm:h-40 lg:w-44 lg:h-44 rounded-full object-cover border-4 border-white shadow-lg"
               />
-
-              {isEdit && (
-                <button className="absolute bottom-2 right-2 bg-black text-white p-2 rounded-full">
-                  <Camera size={18} />
-                </button>
-              )}
             </div>
 
             <span className="mt-5 px-5 py-2 rounded-full bg-green-100 text-green-700 font-medium">
@@ -113,64 +148,25 @@ export default function ProfilePage() {
           <div className="lg:col-span-3">
             <div className="flex flex-col lg:flex-row justify-between gap-8">
               <div>
-                {isEdit ? (
-                  <input
-                    className="text-5xl font-bold bg-transparent border-b-2 outline-none w-full"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                ) : (
-                  <h1 className="text-5xl font-bold">{name}</h1>
-                )}
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold break-words">
+                  {user?.name}
+                </h1>
 
                 <div className="flex items-center gap-3 mt-4 text-gray-600">
                   <Mail size={18} />
-
-                  {isEdit ? (
-                    <input
-                      className="border rounded-lg px-3 py-2"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                  ) : (
-                    email
-                  )}
+                  {user?.email}
                 </div>
               </div>
 
               {/* Buttons */}
 
-              <div className="flex gap-3 flex-wrap h-fit">
-                {!isEdit ? (
-                  <button
-                    onClick={() => setIsEdit(true)}
-                    className="bg-black text-white rounded-full px-6 py-3 flex items-center gap-2"
-                  >
-                    <Edit3 size={18} />
-                    Edit Profile
-                  </button>
-                ) : (
-                  <>
-                    <button
-                      onClick={handleSave}
-                      className="bg-green-600 text-white rounded-full px-6 py-3 flex items-center gap-2"
-                    >
-                      <Save size={18} />
-                      Save
-                    </button>
-
-                    <button
-                      onClick={() => {
-                        setIsEdit(false);
-                        setPassword("");
-                      }}
-                      className="bg-red-500 text-white rounded-full px-6 py-3"
-                    >
-                      Cancel
-                    </button>
-                  </>
-                )}
-              </div>
+              <Link
+                href="/dashboardfile/profile/edit"
+                className="bg-black text-white rounded-full px-5py-3 flex items-center justify-center gap-2 w-full sm:w-auto lg:w-35 lg:h-12 text-sm sm:text-base transition hover:bg-gray-800"
+              >
+                <Edit3 size={18} />
+                Edit Profile
+              </Link>
             </div>
 
             {/* Info */}
@@ -199,53 +195,113 @@ export default function ProfilePage() {
 
             {/* Skills */}
 
-            <div className="mt-10">
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+              className="mt-10"
+            >
               <h3 className="font-semibold text-lg">Favorite Categories</h3>
 
-              <div className="flex flex-wrap gap-3 mt-4">
+              <motion.div
+                variants={container}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true }}
+                className="flex flex-wrap gap-3 mt-4"
+              >
                 {["Career", "Motivation", "Success", "Business", "Life"].map(
                   (item) => (
-                    <span
+                    <motion.span
                       key={item}
-                      className="bg-white px-5 py-2 rounded-full shadow text-gray-700"
+                      variants={fadeUp}
+                      whileHover={{
+                        scale: 1.08,
+                        y: -5,
+                      }}
+                      transition={{
+                        duration: 0.2,
+                      }}
+                      className="bg-white px-5 py-2 rounded-full shadow-md text-gray-700 cursor-pointer hover:shadow-xl transition"
                     >
                       ⭐ {item}
-                    </span>
+                    </motion.span>
                   ),
                 )}
-              </div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+      </motion.div>
+
+      <motion.div
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        className="mt-8 bg-white rounded-3xl shadow-lg p-5 sm:p-8 border border-gray-100"
+      >
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-2xl font-bold">Personal Information</h2>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* Profession */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-600 mb-2">
+              Profession
+            </label>
+
+            <div className="bg-gray-50 rounded-xl p-4 font-medium">
+              {user?.profession || "Not Added"}
+            </div>
+          </div>
+
+          {/* Country */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-600 mb-2">
+              Country
+            </label>
+
+            <div className="bg-gray-50 rounded-xl p-4 font-medium">
+              {user?.country || "Not Added"}
+            </div>
+          </div>
+
+          {/* Phone */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-600 mb-2">
+              Phone
+            </label>
+
+            <div className="bg-gray-50 rounded-xl p-4 font-medium">
+              {user?.phone || "Not Added"}
+            </div>
+          </div>
+
+          {/* Bio */}
+          <div className="md:col-span-2">
+            <label className="block text-sm font-semibold text-gray-600 mb-2">
+              Bio
+            </label>
+
+            <div className="bg-gray-50 rounded-xl p-4 leading-7">
+              {user?.bio || "Not Added"}
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="grid md:grid-cols-2 gap-4 mt-6">
-
-  <div className="bg-blue-50 p-4 rounded-xl">
-    <p className="text-sm text-gray-500">Profession</p>
-    <h3 className="font-semibold">{profession || "Not Added"}</h3>
-  </div>
-
-  <div className="bg-blue-50 p-4 rounded-xl">
-    <p className="text-sm text-gray-500">Country</p>
-    <h3 className="font-semibold">{country || "Not Added"}</h3>
-  </div>
-
-  <div className="bg-blue-50 p-4 rounded-xl">
-    <p className="text-sm text-gray-500">Phone</p>
-    <h3 className="font-semibold">{phone || "Not Added"}</h3>
-  </div>
-
-  <div className="bg-blue-50 p-4 rounded-xl">
-    <p className="text-sm text-gray-500">Bio</p>
-    <h3 className="font-semibold">{bio || "Not Added"}</h3>
-  </div>
-
-</div>
+      </motion.div>
 
       {/* Story Section */}
 
-      <div className="grid lg:grid-cols-4 gap-10 mt-12">
+      <motion.div
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        className="grid lg:grid-cols-4 gap-6 lg:gap-10 mt-12"
+      >
         {/* Left */}
 
         <div>
@@ -258,123 +314,68 @@ export default function ProfilePage() {
 
         {/* Right */}
 
-        <div className="lg:col-span-3">
-          {/* Tabs */}
-
-          <div className="flex gap-8 border-b pb-4 text-sm font-semibold">
-            <button
-              onClick={() => setActiveTab("story")}
-              className={`pb-2 ${
-                activeTab === "story"
-                  ? "border-b-2 border-black text-black"
-                  : "text-gray-500"
-              }`}
-            >
-              My Story
-            </button>
-
-            <button
-              onClick={() => setActiveTab("skills")}
-              className={`pb-2 ${
-                activeTab === "skills"
-                  ? "border-b-2 border-black text-black"
-                  : "text-gray-500"
-              }`}
-            >
-              Skills
-            </button>
-
-            <button
-              onClick={() => setActiveTab("projects")}
-              className={`pb-2 ${
-                activeTab === "projects"
-                  ? "border-b-2 border-black text-black"
-                  : "text-gray-500"
-              }`}
-            >
-              Projects
-            </button>
-
-            <button
-              onClick={() => setActiveTab("experience")}
-              className={`pb-2 ${
-                activeTab === "experience"
-                  ? "border-b-2 border-black text-black"
-                  : "text-gray-500"
-              }`}
-            >
-              Experience
-            </button>
-          </div>
-
+        <div className="lg:col-span-3 min-w-0">
           {/* Story */}
+          <div className="mt-8 bg-white rounded-3xl shadow-lg p-5 sm:p-8 border border-gray-100 w-full min-w-0">
+            <h2 className="text-2xl font-bold mb-6">My Story</h2>
 
-          <div className="mt-8 space-y-6 text-gray-700 leading-9 text-lg">
-            <p>
-              Every experience teaches something valuable. Through LifeLore I
-              share meaningful life lessons so that others can learn from both
-              my successes and failures.
-            </p>
-
-            <p>
-              My goal is to inspire people by documenting real experiences,
-              preserving knowledge, and encouraging lifelong learning.
-            </p>
-
-            <p>
-              Whether it's career growth, relationships, personal development,
-              or overcoming challenges, every lesson has the power to change
-              someone's life.
+            <p className="text-gray-700 leading-8 whitespace-pre-line break-all w-full">
+              {story || "No story added yet."}
             </p>
           </div>
 
           {/* Stats */}
 
-          <div className="grid md:grid-cols-3 gap-6 mt-12">
-            <div className="bg-white rounded-3xl shadow-md p-6 hover:shadow-xl duration-300">
+          <motion.div
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12"
+          >
+            <motion.div
+              variants={fadeUp}
+              className="bg-white rounded-3xl shadow-md p-6 hover:shadow-xl duration-300"
+            >
               <BookOpen className="text-blue-600 mb-4" size={35} />
 
-              <h3 className="text-4xl font-bold">12</h3>
+              <h3 className="text-4xl font-bold">{lessonCount}</h3>
 
               <p className="text-gray-500 mt-2">Lessons Shared</p>
-            </div>
+            </motion.div>
 
-            <div className="bg-white rounded-3xl shadow-md p-6 hover:shadow-xl duration-300">
+            <motion.div
+              variants={fadeUp}
+              className="bg-white rounded-3xl shadow-md p-6 hover:shadow-xl duration-300"
+            >
               <Heart className="text-red-500 mb-4" size={35} />
 
-              <h3 className="text-4xl font-bold">254</h3>
+              <h3 className="text-4xl font-bold">{totalLikes}</h3>
 
               <p className="text-gray-500 mt-2">Total Likes</p>
-            </div>
+            </motion.div>
 
-            <div className="bg-white rounded-3xl shadow-md p-6 hover:shadow-xl duration-300">
+            <motion.div
+              variants={fadeUp}
+              className="bg-white rounded-3xl shadow-md p-6 hover:shadow-xl duration-300"
+            >
               <Shield className="text-green-600 mb-4" size={35} />
 
-              <h3 className="text-4xl font-bold">Strong</h3>
+              <h3 className="text-4xl font-bold">{profileComplete}%</h3>
 
-              <p className="text-gray-500 mt-2">Account Security</p>
-            </div>
-          </div>
-
-          {/* Password */}
-
-          {isEdit && (
-            <div className="bg-white rounded-3xl shadow-md p-8 mt-10">
-              <h2 className="text-2xl font-bold mb-6">Change Password</h2>
-
-              <input
-                type="password"
-                placeholder="Enter new password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full border rounded-xl p-4"
-              />
-            </div>
-          )}
+              <p className="text-gray-500 mt-2">Profile Completed</p>
+            </motion.div>
+          </motion.div>
 
           {/* Recent Activity */}
 
-          <div className="bg-white rounded-3xl shadow-md p-8 mt-10">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            className="bg-white rounded-3xl shadow-md p-5 sm:p-8 mt-10"
+          >
             <h2 className="text-2xl font-bold mb-8">Recent Activity</h2>
 
             <div className="space-y-6">
@@ -414,9 +415,9 @@ export default function ProfilePage() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

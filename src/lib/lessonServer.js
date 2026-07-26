@@ -12,9 +12,9 @@ export const getPublicLessons = async () => {
 };
 
 //Publiclessons-Home Page
-export const getPublicLessonsHome = async () => {
+export const getPublicLessonsHome = async (userId = "") => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/publiclessons-home`,
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/publiclessons-home?userId=${userId}`,
   );
 
   if (!res.ok) {
@@ -40,7 +40,7 @@ export const getPublicLessonsId = async (id) => {
 //Profile
 export const updateProfile = async (id, { name, email, image, password }) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}dashboardfile/profile/update/${id}`,
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/profile/update/${id}`,
     {
       method: "PATCH",
       headers: {
@@ -62,6 +62,31 @@ export const updateProfile = async (id, { name, email, image, password }) => {
   }
 
   return data;
+};
+
+//Profile-stories SAVE
+export const saveProfileStory = async (storyData) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/profile/story`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(storyData),
+    },
+  );
+
+  return await res.json();
+};
+
+//Profile-stories GET
+export const getProfileStory = async (userId) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/profile/story/${userId}`,
+  );
+
+  return await res.json();
 };
 
 // Add Public Lesson
@@ -208,6 +233,18 @@ export const updateComment = async (id, comment) => {
   return await res.json();
 };
 
+//View count kora
+export const increaseLessonView = async (id) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons/view/${id}`,
+    {
+      method: "PATCH",
+    },
+  );
+
+  return res.json();
+};
+
 // Approve Lesson
 export const approveLesson = async (id) => {
   const res = await fetch(
@@ -276,9 +313,9 @@ export const getAdminLessons = async () => {
 };
 
 //< 1 2 3 4 5 > page
-export const getPaginatedPublicLessons = async (page = 1) => {
+export const getPaginatedPublicLessons = async (page = 1, userId = "") => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons?page=${page}&limit=12`
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons?page=${page}&limit=12&userId=${userId}`,
   );
 
   if (!res.ok) {

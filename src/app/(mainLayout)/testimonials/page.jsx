@@ -151,7 +151,7 @@ export default function TestimonialCommentsPage() {
                 )}
               </div>
               <Quote className="w-12 h-12 text-blue-500 mb-6" />
-              //Comment section
+              Comment
               {editingId === item._id ? (
                 <>
                   <textarea

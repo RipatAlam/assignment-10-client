@@ -3,7 +3,11 @@ import Image from "next/image";
 import { Heart, MessageCircle, ArrowRight, Search } from "lucide-react";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { getPaginatedPublicLessons, likeLesson } from "@/lib/lessonServer";
+import {
+  getPaginatedPublicLessons,
+  likeLesson,
+  increaseLessonView,
+} from "@/lib/lessonServer";
 import Link from "next/link";
 import { useSession } from "@/lib/auth-client";
 
@@ -14,34 +18,58 @@ export default function PublicLessons() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
+  const [sortBy, setSortBy] = useState("newest");
+
   const { data } = useSession();
 
   useEffect(() => {
     const fetchLessons = async () => {
       try {
-        const data = await getPaginatedPublicLessons(page);
+        const result = await getPaginatedPublicLessons(page, data?.user?.id);
 
-        console.log(data);
+        console.log(result);
 
-        setPublicLessonsData(data.lessons || []);
-        setTotalPages(data.totalPages || 1);
+        setPublicLessonsData(result.lessons || []);
+        setTotalPages(result.totalPages || 1);
       } catch (error) {
         console.error("Fetch Error:", error);
       }
     };
 
     fetchLessons();
-  }, [page]);
+  }, [page, data?.user?.id]);
 
-  const filteredLessons = publicLessonsData.filter((lesson) => {
-    const searchTerm = (search || "").toLowerCase();
+  const filteredLessons = [...publicLessonsData]
+    .filter((lesson) => {
+      const searchTerm = (search || "").toLowerCase();
 
-    return (
-      lesson.title?.toLowerCase().includes(searchTerm) ||
-      lesson.category?.toLowerCase().includes(searchTerm) ||
-      lesson.name?.toLowerCase().includes(searchTerm)
-    );
-  });
+      return (
+        lesson.title?.toLowerCase().includes(searchTerm) ||
+        lesson.category?.toLowerCase().includes(searchTerm) ||
+        lesson.name?.toLowerCase().includes(searchTerm)
+      );
+    })
+    .sort((a, b) => {
+      switch (sortBy) {
+        case "likes":
+          return (b.likes || 0) - (a.likes || 0);
+
+        case "views":
+          return (b.views || 0) - (a.views || 0);
+
+        case "az":
+          return a.title.localeCompare(b.title);
+
+        case "za":
+          return b.title.localeCompare(a.title);
+
+        case "oldest":
+          return new Date(a.createdAt) - new Date(b.createdAt);
+
+        default: // newest
+          return new Date(b.createdAt) - new Date(a.createdAt);
+      }
+    });
 
   //Like count korar jonno
   const handleLike = async (lessonId) => {
@@ -60,7 +88,9 @@ export default function PublicLessons() {
       if (result.success) {
         setPublicLessonsData((prev) =>
           prev.map((item) =>
-            item._id === lessonId ? { ...item, likes: item.likes + 1 } : item,
+            item._id === lessonId
+              ? { ...item, likes: item.likes + 1, isLiked: true }
+              : item,
           ),
         );
       } else {
@@ -97,9 +127,9 @@ export default function PublicLessons() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="max-w-2xl mx-auto mb-14"
+          className="max-w-5xl mx-auto mb-14 flex flex-col md:flex-row gap-4"
         >
-          <div className="relative">
+          <div className="relative flex-1">
             <Search
               size={20}
               className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400"
@@ -110,9 +140,22 @@ export default function PublicLessons() {
               placeholder="Search by title, category or author..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-2xl border border-gray-200 bg-white py-4 pl-14 pr-5 text-gray-700 shadow-sm outline-none transition-all duration-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+              className="w-full rounded-2xl border border-gray-200 bg-white py-4 pl-14 pr-5 text-gray-700 shadow-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
             />
           </div>
+
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="rounded-2xl border border-gray-200 bg-white px-5 py-4 shadow-sm outline-none focus:border-blue-500"
+          >
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+            <option value="likes">Most Liked</option>
+            <option value="views">Most Viewed</option>
+            <option value="az">Title (A-Z)</option>
+            <option value="za">Title (Z-A)</option>
+          </select>
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -209,9 +252,16 @@ export default function PublicLessons() {
                   <div className="flex justify-between items-center mt-6 text-gray-600">
                     <div
                       onClick={() => handleLike(lesson._id)}
-                      className="flex items-center gap-1"
+                      className="flex items-center gap-1 cursor-pointer"
                     >
-                      <Heart size={16} />
+                      <Heart
+                        size={16}
+                        className={
+                          lesson.isLiked
+                            ? "fill-red-500 text-red-500"
+                            : "text-gray-500"
+                        }
+                      />
                       {lesson.likes}
                     </div>
 
@@ -224,10 +274,13 @@ export default function PublicLessons() {
                     </Link>
 
                     <div className="flex items-center gap-1">
-                      👁 {lesson.views}
+                      👁 {lesson.views || 0}
                     </div>
                   </div>
-                  <Link href={`/dashboard/public-lessons/${lesson._id}`}>
+                  <Link
+                    href={`/dashboard/public-lessons/${lesson._id}`}
+                    onClick={() => increaseLessonView(lesson._id)}
+                  >
                     <button className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold transition">
                       Read Lesson
                     </button>

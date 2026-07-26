@@ -15,14 +15,14 @@ export default function PublicLessonsHomePage() {
   useEffect(() => {
     const fetchLessons = async () => {
       try {
-        const data = await getPublicLessonsHome();
-        setPublicLessonsData(data);
+        const lessons = await getPublicLessonsHome(data?.user?.id);
+        setPublicLessonsData(lessons);
       } catch (error) {
         console.error("Fetch Error:", error);
       }
     };
     fetchLessons();
-  }, []);
+  }, [data?.user?.id]);
 
   //Like count korar jonno
   const handleLike = async (lessonId) => {
@@ -41,7 +41,9 @@ export default function PublicLessonsHomePage() {
       if (result.success) {
         setPublicLessonsData((prev) =>
           prev.map((item) =>
-            item._id === lessonId ? { ...item, likes: item.likes + 1 } : item,
+            item._id === lessonId
+              ? { ...item, likes: item.likes + 1, isLiked: true }
+              : item,
           ),
         );
       } else {
@@ -114,9 +116,16 @@ export default function PublicLessonsHomePage() {
                   <div className="flex gap-5 text-gray-600">
                     <div
                       onClick={() => handleLike(lesson._id)}
-                      className="flex items-center gap-2"
+                      className="flex items-center gap-2 cursor-pointer"
                     >
-                      <Heart size={18} />
+                      <Heart
+                        size={18}
+                        className={
+                          lesson.isLiked
+                            ? "fill-red-500 text-red-500"
+                            : "text-gray-500"
+                        }
+                      />
                       {lesson.likes}
                     </div>
                     <Link
