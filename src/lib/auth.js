@@ -22,17 +22,6 @@ export const auth = betterAuth({
     },
   },
 
-  session: {
-    cookieCache: {
-      enabled: true,
-      maxAge: 7 * 24 *60 *60 //7days
-    },
-  },
-
-  plugins: [
-    jwt()
-  ],
-
   user: {
     additionalFields: {
       role: {

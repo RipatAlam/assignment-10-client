@@ -25,10 +25,9 @@ export const getPublicLessonsHome = async (userId = "") => {
 };
 
 //Public-lessons/:id
-export const getPublicLessonsId = async (id, token) => {
+export const getPublicLessonsId = async (id) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons/${id}`,
-    },
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons/${id}`
   );
 
   if (!res.ok) {
