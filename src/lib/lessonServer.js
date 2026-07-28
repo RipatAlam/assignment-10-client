@@ -28,10 +28,6 @@ export const getPublicLessonsHome = async (userId = "") => {
 export const getPublicLessonsId = async (id, token) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons/${id}`,
-    {
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
     },
   );
 
@@ -95,14 +91,13 @@ export const getProfileStory = async (userId) => {
 };
 
 // Add Public Lesson
-export const addPublicLesson = async (lessonData, token) => {
+export const addPublicLesson = async (lessonData) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(lessonData),
     },

@@ -28,13 +28,8 @@ export default function LessonDetails() {
   useEffect(() => {
     const fetchLesson = async () => {
       try {
-        // প্রথমে token আনো
-        const tokenRes = await fetch("/api/token");
-        const { token } = await tokenRes.json();
 
-        //console.log("Token:", token);
-
-        const data = await getPublicLessonsId(id, token.token);
+        const data = await getPublicLessonsId(id);
         setLesson(data);
       } catch (error) {
         console.error("Fetch Error:", error);
