@@ -107,8 +107,13 @@ export default function AddLessonPage() {
         updatedAt: new Date(),
       };
 
+      const tokenRes = await fetch("/api/token");
+      const data = await tokenRes.json();
+
+      const token = data.token.token;
+
       // 3. Save to MongoDB
-      const result = await addPublicLesson(lessonData);
+      const result = await addPublicLesson(lessonData, token);
 
       console.log(result);
       alert("Lesson added successfully!");
