@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { Heart, Calendar, User, MessageCircle } from "lucide-react";
 import {
   addComment,
   deletePublicLesson,
@@ -28,7 +29,6 @@ export default function LessonDetails() {
   useEffect(() => {
     const fetchLesson = async () => {
       try {
-
         const data = await getPublicLessonsId(id);
         setLesson(data);
       } catch (error) {
