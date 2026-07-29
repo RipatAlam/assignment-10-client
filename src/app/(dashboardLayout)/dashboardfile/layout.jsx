@@ -7,7 +7,7 @@ const DashboardLayout = ({ children }) => {
       {/* SIDEBAR */}
       <DashboardLayoutSidebar />
       <main className="flex-1 min-w-0">
-        <div className="max-w-7xl mx-auto ml-70 p-4 sm:p-6 lg:p-8">
+        <div className="max-w-7xl mx-auto lg:ml-70 p-4 sm:p-6 lg:p-8">
           {children}
         </div>
       </main>
