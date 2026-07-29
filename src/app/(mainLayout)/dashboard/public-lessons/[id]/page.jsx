@@ -269,29 +269,9 @@ export default function LessonDetails() {
                 </div>
 
                 {/* Button */}
-                {lesson.price > 0 ? (
-                  <form action="/>
-                    <input type="hidden" name="title" value={lesson.title} />
-
-                    <input
-                      type="hidden"
-                      name="price"
-                      value={lesson.finalPrice}
-                    />
-
-                    <button
-                      onClick={() => alert("Payment setup coming soon")}
-                      type="submit"
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105 shadow-md"
-                    >
-                      Buy Premium
-                    </button>
-                  </form>
-                ) : (
-                  <button className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105 shadow-md">
-                    Start Reading
-                  </button>
-                )}
+                <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105 shadow-md">
+                  {lesson.isPremium ? "Buy Premium" : "Start Reading"}
+                </button>
               </div>
             </div>
 
