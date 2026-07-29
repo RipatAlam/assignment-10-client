@@ -140,36 +140,21 @@ export default function pricingupgradePage() {
                 ))}
               </ul>
 
-              {/* Free Plan */}
-              {plan.name === "Free" ? (
-                <button
-                  disabled
-                  className="w-full mt-10 py-3 rounded-xl bg-gray-200 text-gray-500 cursor-not-allowed font-semibold"
-                >
-                  Current Plan
-                </button>
-              ) : (
-                <form action="/">
-                  <input type="hidden" name="title" value={plan.name} />
-
-                  <input
-                    type="hidden"
-                    name="price"
-                    value={parseFloat(plan.price.replace("$", ""))}
-                  />
-
+              <form action="/api/checkout_sessions" method="POST">
+                <section>
                   <button
                     type="submit"
+                    role="link"
                     className={`w-full mt-10 py-3 rounded-xl font-semibold transition ${
                       plan.featured
                         ? "bg-blue-600 hover:bg-blue-700 text-white"
-                        : "bg-black hover:bg-gray-800 text-white"
+                        : "bg-gray-100 hover:bg-gray-200"
                     }`}
                   >
-                    {plan.button}
+                    Checkout
                   </button>
-                </form>
-              )}
+                </section>
+              </form>
             </motion.div>
           ))}
         </div>
