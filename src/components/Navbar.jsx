@@ -270,7 +270,7 @@ export default function Navbar({ user, plan = "free" }) {
           {/* Mobile Button */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden"
+            className="md:hidden text-white"
           >
             {mobileOpen ? <X /> : <Menu />}
           </button>
@@ -322,7 +322,7 @@ export default function Navbar({ user, plan = "free" }) {
                   <Link
                     onClick={closeMobile}
                     href="/dashboard/public-lessons"
-                    className="px-3 py-2 rounded-lg hover:bg-gray-100 font-serif"
+                    className="px-3 py-2 rounded-lg text-slate-300 hover:bg-[#0d1728] hover:text-[#2563eb] transition-all duration-300 font-serif"
                   >
                     Public Lessons
                   </Link>
@@ -332,7 +332,7 @@ export default function Navbar({ user, plan = "free" }) {
                     <div>
                       <button
                         onClick={() => setDashboardOpen(!dashboardOpen)}
-                        className="px-3 py-2 rounded-lg hover:bg-gray-100 font-serif flex items-center justify-between w-full"
+                        className="px-3 py-2 rounded-lg text-slate-300 hover:bg-[#0d1728] hover:text-[#2563eb] transition-all duration-300 font-serif flex items-center justify-between w-full"
                       >
                         <span className="flex items-center gap-2">
                           <LayoutDashboard size={16} /> Dashboard
@@ -346,7 +346,7 @@ export default function Navbar({ user, plan = "free" }) {
                           <Link
                             onClick={closeMobile}
                             href="/dashboardfile/user"
-                            className="px-3 py-2 rounded-lg hover:bg-gray-100 text-sm font-serif"
+                            className="px-3 py-2 rounded-lg text-slate-300 hover:bg-[#0d1728] hover:text-[#2563eb] transition-all duration-300 font-serif"
                           >
                             👤 User
                           </Link>
@@ -360,7 +360,7 @@ export default function Navbar({ user, plan = "free" }) {
                       <Link
                         onClick={closeMobile}
                         href="/dashboard/add-lesson"
-                        className="px-3 py-2 rounded-lg hover:bg-gray-100 flex items-center gap-2 font-serif"
+                        className="px-3 py-2 rounded-lg text-slate-300 hover:bg-[#0d1728] hover:text-[#2563eb] transition-all duration-300 font-serif"
                       >
                         <BookOpen size={16} /> Add Lesson
                       </Link>
@@ -368,7 +368,7 @@ export default function Navbar({ user, plan = "free" }) {
                       <Link
                         onClick={closeMobile}
                         href="/dashboard/my-lessons"
-                        className="px-3 py-2 rounded-lg hover:bg-gray-100 flex items-center gap-2 font-serif"
+                        className="px-3 py-2 rounded-lg text-slate-300 hover:bg-[#0d1728] hover:text-[#2563eb] transition-all duration-300 font-serif"
                       >
                         <LayoutDashboard size={16} /> My Lessons
                       </Link>
