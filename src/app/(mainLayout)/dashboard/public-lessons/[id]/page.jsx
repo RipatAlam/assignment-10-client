@@ -280,6 +280,7 @@ export default function LessonDetails() {
                     />
 
                     <button
+                      onClick={() => alert("Payment setup coming soon")}
                       type="submit"
                       className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105 shadow-md"
                     >
