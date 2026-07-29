@@ -130,8 +130,8 @@ export default function OverviewPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F8F4EE] p-4 sm:p-6 lg:p-8">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <div className="bg-[#F8F4EE]">
+      <div className="space-y-8">
         {/* Welcome */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
