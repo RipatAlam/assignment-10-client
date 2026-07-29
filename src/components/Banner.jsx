@@ -85,7 +85,7 @@ export default function BannerPage() {
 
             <motion.h1
               variants={fadeLeft}
-              className="text-5xl font-serif md:text-6xl xl:text-6xl font-bold leading-tight text-white"
+              className="text-5xl font-serif md:text-5xl xl:text-5xl font-bold leading-tight text-white"
             >
               Every Experience
               <br />
