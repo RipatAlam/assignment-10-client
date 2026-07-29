@@ -44,28 +44,36 @@ export default function Footer() {
 
             <div className="flex gap-4 mt-8">
               <a
-                href="#"
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center hover:bg-blue-600 transition"
               >
                 <FaFacebookF size={18} />
               </a>
 
               <a
-                href="#"
+                href="https://x.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center hover:bg-blue-600 transition"
               >
                 <FaXTwitter size={18} />
               </a>
 
               <a
-                href="#"
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center hover:bg-blue-600 transition"
               >
                 <FaInstagram size={18} />
               </a>
 
               <a
-                href="#"
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center hover:bg-blue-600 transition"
               >
                 <FaLinkedinIn size={18} />
@@ -83,15 +91,15 @@ export default function Footer() {
               </li>
 
               <li>
-                <Link href="/lessons">Public Lessons</Link>
+                <Link href="/dashboard/public-lessons">Public Lessons</Link>
               </li>
 
               <li>
-                <Link href="/add-lesson">Add Lesson</Link>
+                <Link href="/dashboard/add-lesson">Add Lesson</Link>
               </li>
 
               <li>
-                <Link href="/my-lessons">My Lessons</Link>
+                <Link href="/dashboard/my-lessons">My Lessons</Link>
               </li>
             </ul>
           </div>
@@ -101,11 +109,24 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-5">Categories</h3>
 
             <ul className="space-y-3 text-gray-400">
-              <li>Career</li>
-              <li>Health</li>
-              <li>Finance</li>
-              <li>Relationships</li>
-              <li>Education</li>
+              <li>
+                <Link href="/categories/career">Career</Link>
+              </li>
+
+              <li>
+                <Link href="/categories/health">Health</Link>
+              </li>
+
+              <li>
+                <Link href="/categories/finance">Finance</Link>
+              </li>
+
+              <li>
+                <Link href="/categories/relationships">Relationships</Link>
+              </li>
+              <li>
+                <Link href="/categories/education">Education</Link>
+              </li>
             </ul>
           </div>
 

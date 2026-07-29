@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { Brain, Briefcase, Heart, Activity, Wallet } from "lucide-react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 // Animation Variants
 const fadeLeft = {
@@ -103,21 +104,25 @@ export default function BannerPage() {
             </motion.p>
 
             <motion.div variants={fadeUp} className="flex gap-4 mt-10">
-              <motion.button
-                whileHover={{ scale: 1.05, y: -3 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-blue-600 font-serif hover:bg-blue-700 transition px-8 py-4 rounded-xl text-white font-semibold"
-              >
-                Explore Lessons →
-              </motion.button>
+              <Link href="/dashboard/public-lessons">
+                <motion.button
+                  whileHover={{ scale: 1.05, y: -3 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-blue-600 font-serif hover:bg-blue-700 transition px-8 py-4 rounded-xl text-white font-semibold"
+                >
+                  Explore Lessons →
+                </motion.button>
+              </Link>
 
-              <motion.button
-                whileHover={{ scale: 1.05, y: -3 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-blue-600 font-serif hover:bg-blue-700 transition px-8 py-4 rounded-xl text-white font-semibold"
-              >
-                Share Your Lesson
-              </motion.button>
+              <Link href="/dashboard/add-lesson">
+                <motion.button
+                  whileHover={{ scale: 1.05, y: -3 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-blue-600 font-serif hover:bg-blue-700 transition px-8 py-4 rounded-xl text-white font-semibold"
+                >
+                  Share Your Lesson
+                </motion.button>
+              </Link>
             </motion.div>
 
             {/* Avatar Section */}
