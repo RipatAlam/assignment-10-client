@@ -130,7 +130,7 @@ export default function OverviewPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F8F4EE] p-6 lg:p-10">
+    <div className="min-h-screen bg-[#F8F4EE] p-4 sm:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Welcome */}
         <motion.div
@@ -147,7 +147,8 @@ export default function OverviewPage() {
         </motion.div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+          {" "}
           {showAllCategories && (
             <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
               <div className="bg-white rounded-3xl p-6 w-[90%] max-w-md">
@@ -217,9 +218,11 @@ export default function OverviewPage() {
               </button>
             </div>
 
-            <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="flex flex-col xl:flex-row items-center justify-between gap-8">
+              {" "}
               {/* Chart */}
-              <div className="w-56 h-56">
+              <div className="w-full max-w-[230px] h-[230px]">
+                {" "}
                 {categoryData.length > 0 ? (
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
@@ -250,7 +253,6 @@ export default function OverviewPage() {
                   </div>
                 )}
               </div>
-
               {/* Category List */}
               <div className="space-y-4 w-full">
                 {categoryData.slice(0, 5).map((item, index) => (
@@ -301,7 +303,7 @@ export default function OverviewPage() {
                       alt={lesson.title}
                       width={70}
                       height={70}
-                      className="w-16 h-16 rounded-xl object-cover"
+                      className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl object-cover"
                     />
 
                     {/* Details */}
@@ -357,7 +359,8 @@ export default function OverviewPage() {
           >
             <h2 className="text-xl font-bold mb-5">User Information</h2>
 
-            <div className="flex items-center gap-5">
+            <div className="flex flex-col sm:flex-row items-center gap-5">
+              {" "}
               <Image
                 src={user?.image || "https://i.pravatar.cc/150"}
                 alt="user"
@@ -365,7 +368,6 @@ export default function OverviewPage() {
                 height={80}
                 className="rounded-full border-4 border-[#2563eb]"
               />
-
               <div>
                 <h3 className="font-bold text-xl">{user?.name}</h3>
 
