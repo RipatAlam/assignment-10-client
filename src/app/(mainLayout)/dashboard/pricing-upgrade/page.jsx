@@ -149,7 +149,7 @@ export default function pricingupgradePage() {
                   Current Plan
                 </button>
               ) : (
-                <form action="/api/checkout_sessions" method="POST">
+                <form action="/">
                   <input type="hidden" name="title" value={plan.name} />
 
                   <input

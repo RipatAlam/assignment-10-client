@@ -270,7 +270,7 @@ export default function LessonDetails() {
 
                 {/* Button */}
                 {lesson.price > 0 ? (
-                  <form action="/api/checkout_sessions" method="POST">
+                  <form action="/>
                     <input type="hidden" name="title" value={lesson.title} />
 
                     <input
