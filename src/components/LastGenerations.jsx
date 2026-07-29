@@ -92,7 +92,7 @@ export default function FeaturesSection() {
             <div className="overflow-hidden rounded-[34px] shadow-xl">
               <div className="">
                 <Image
-                  src="/images/PersonWritingLesson.jpg"
+                  src="https://i.ibb.co/nqh4wWXX/Person-Writing-Lesson.jpg"
                   width={650}
                   height={800}
                   alt="Interview"
@@ -214,7 +214,7 @@ export default function FeaturesSection() {
           >
             <div className="overflow-hidden rounded-[34px] shadow-xl">
               <Image
-                src="/images/ReadingStories.jpg"
+                src="https://i.ibb.co/jPK3bP7C/Reading-Stories.jpg"
                 width={800}
                 height={650}
                 alt="Family"
@@ -237,7 +237,7 @@ export default function FeaturesSection() {
           >
             <div className="overflow-hidden rounded-[34px] shadow-xl">
               <Image
-                src="/images/MyLessonsDashboard.jpg"
+                src="https://i.ibb.co/MyFrKJMp/My-Lessons-Dashboard.jpg"
                 width={800}
                 height={650}
                 alt="Digital Legacy"
