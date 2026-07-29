@@ -83,7 +83,6 @@ export default function pricingupgradePage() {
   return (
     <section className="max-w-7xl mx-auto w-full overflow-hidden">
       <div className="bg-[#F8F4EE] py-20 px-6 sm:px-8 md:px-10 lg:px-10">
-
         {/* Hero */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -108,7 +107,6 @@ export default function pricingupgradePage() {
 
         {/* Pricing Cards */}
         <div className="grid lg:grid-cols-3 gap-8">
-
           {plans.map((plan, index) => (
             <motion.div
               key={plan.name}
@@ -142,65 +140,71 @@ export default function pricingupgradePage() {
                 ))}
               </ul>
 
-              <button
-                className={`w-full mt-10 py-3 rounded-xl font-semibold transition ${
-                  plan.featured
-                    ? "bg-blue-600 hover:bg-blue-700 text-white"
-                    : "bg-gray-100 hover:bg-gray-200"
-                }`}
-              >
-                {plan.button}
-              </button>
+              {/* Free Plan */}
+              {plan.name === "Free" ? (
+                <button
+                  disabled
+                  className="w-full mt-10 py-3 rounded-xl bg-gray-200 text-gray-500 cursor-not-allowed font-semibold"
+                >
+                  Current Plan
+                </button>
+              ) : (
+                <form action="/api/checkout_sessions" method="POST">
+                  <input type="hidden" name="title" value={plan.name} />
+
+                  <input
+                    type="hidden"
+                    name="price"
+                    value={parseFloat(plan.price.replace("$", ""))}
+                  />
+
+                  <button
+                    type="submit"
+                    className={`w-full mt-10 py-3 rounded-xl font-semibold transition ${
+                      plan.featured
+                        ? "bg-blue-600 hover:bg-blue-700 text-white"
+                        : "bg-black hover:bg-gray-800 text-white"
+                    }`}
+                  >
+                    {plan.button}
+                  </button>
+                </form>
+              )}
             </motion.div>
           ))}
-
         </div>
 
         {/* Premium Features */}
         <div className="mt-28">
-
           <h2 className="text-4xl font-bold text-center text-[#231815]">
             Premium Features
           </h2>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mt-14">
-
             {premiumFeatures.map((item) => (
               <div
                 key={item.title}
                 className="bg-white rounded-3xl p-8 text-center shadow-lg"
               >
-                <item.icon
-                  className="mx-auto text-blue-600"
-                  size={40}
-                />
+                <item.icon className="mx-auto text-blue-600" size={40} />
 
-                <h3 className="text-xl font-bold mt-5">
-                  {item.title}
-                </h3>
+                <h3 className="text-xl font-bold mt-5">{item.title}</h3>
 
-                <p className="text-gray-600 mt-3">
-                  {item.desc}
-                </p>
+                <p className="text-gray-600 mt-3">{item.desc}</p>
               </div>
             ))}
-
           </div>
         </div>
 
         {/* FAQ */}
         <div className="mt-28 max-w-3xl mx-auto">
-
           <h2 className="text-4xl font-bold text-center">
             Frequently Asked Questions
           </h2>
 
           <div className="space-y-6 mt-10">
-
             <div className="bg-white rounded-2xl p-6 shadow">
-              <h3 className="font-bold text-lg">
-                Can I cancel anytime?
-              </h3>
+              <h3 className="font-bold text-lg">Can I cancel anytime?</h3>
               <p className="text-gray-600 mt-2">
                 Yes. You can upgrade or cancel your subscription whenever you
                 want.
@@ -208,9 +212,7 @@ export default function pricingupgradePage() {
             </div>
 
             <div className="bg-white rounded-2xl p-6 shadow">
-              <h3 className="font-bold text-lg">
-                Is there a free plan?
-              </h3>
+              <h3 className="font-bold text-lg">Is there a free plan?</h3>
               <p className="text-gray-600 mt-2">
                 Absolutely! You can use our Free plan forever.
               </p>
@@ -225,7 +227,6 @@ export default function pricingupgradePage() {
                 features.
               </p>
             </div>
-
           </div>
         </div>
       </div>

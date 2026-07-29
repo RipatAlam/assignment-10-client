@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { uploadImage } from "@/lib/uploadImage";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function SignUpPage() {
   const [error, setError] = useState("");
@@ -15,6 +16,9 @@ export default function SignUpPage() {
 
   const [receiveLessonUpdates, setReceiveLessonUpdates] = useState(true);
   const [receiveNewsletter, setReceiveNewsletter] = useState(true);
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const {
     register,
@@ -205,31 +209,38 @@ export default function SignUpPage() {
               <h3 className="text-lg font-semibold text-gray-800 border-b pb-2 mt-6">
                 Security
               </h3>
-              <input
-                {...register("password", {
-                  required: "Password is required",
+              <div className="relative">
+                <input
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters",
+                    },
+                    maxLength: {
+                      value: 12,
+                      message: "Password must be at most 12 characters",
+                    },
+                    pattern: {
+                      value: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/,
+                      message:
+                        "Password must contain uppercase, lowercase and a number",
+                    },
+                  })}
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  placeholder="Password"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
 
-                  minLength: {
-                    value: 6,
-                    message: "Password must be at least 6 characters",
-                  },
-
-                  maxLength: {
-                    value: 12,
-                    message: "Password must be at most 12 characters",
-                  },
-
-                  pattern: {
-                    value: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/,
-                    message:
-                      "Password must contain uppercase, lowercase and a number",
-                  },
-                })}
-                type="password"
-                name="password"
-                placeholder="Password"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
 
               {errors.password && (
                 <p className="text-red-500 text-sm">
@@ -237,17 +248,32 @@ export default function SignUpPage() {
                 </p>
               )}
 
-              <input
-                {...register("confirmPassword", {
-                  required: "Please confirm your password",
-                  validate: (value, formValues) =>
-                    value === formValues.password || "Passwords do not match",
-                })}
-                type="password"
-                name="confirmPassword"
-                placeholder="Confirm Password"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
+              <div className="relative">
+                <input
+                  {...register("confirmPassword", {
+                    required: "Please confirm your password",
+                    validate: (value, formValues) =>
+                      value === formValues.password || "Passwords do not match",
+                  })}
+                  type={showConfirmPassword ? "text" : "password"}
+                  name="confirmPassword"
+                  placeholder="Confirm Password"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+                >
+                  {showConfirmPassword ? (
+                    <EyeOff size={20} />
+                  ) : (
+                    <Eye size={20} />
+                  )}
+                </button>
+              </div>
+
               {errors.confirmPassword && (
                 <p className="text-red-500 text-sm">
                   {errors.confirmPassword.message}

@@ -6,11 +6,13 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function LoginPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -114,18 +116,31 @@ export default function LoginPage() {
               />
 
               {/* PASSWORD */}
-              <input
-                type="password"
-                placeholder="Password"
-                {...register("password", { required: true })}
-                className="w-full border border-gray-200 rounded-xl px-4 py-3"
-                required
-              />
-              {errors.password && (
-                <p className="text-red-500 text-sm">
-                  {errors.password.message}
-                </p>
-              )}
+              <div className="relative">
+  <input
+    type={showPassword ? "text" : "password"}
+    placeholder="Password"
+    {...register("password", {
+      required: "Password is required",
+    })}
+    className="w-full border border-gray-200 rounded-xl px-4 py-3 pr-12"
+    required
+  />
+
+  <button
+    type="button"
+    onClick={() => setShowPassword(!showPassword)}
+    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+  >
+    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+  </button>
+</div>
+
+{errors.password && (
+  <p className="text-red-500 text-sm">
+    {errors.password.message}
+  </p>
+)}
 
               <div className="flex justify-end">
                 <Link href="/forgot-password" className="text-sm text-blue-600">
