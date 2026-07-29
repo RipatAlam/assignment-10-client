@@ -31,8 +31,16 @@ export default function SignUpPage() {
     setLoading(true);
 
     try {
-      const imageFile = data.image[0];
+      const imageFile = data.image?.[0];
+
+      if (!imageFile) {
+        setError("Please select a profile image");
+        setLoading(false);
+        return;
+      }
+
       const imageUrl = await uploadImage(imageFile);
+
       if (!imageUrl) {
         setError("Image upload failed");
         setLoading(false);
@@ -284,12 +292,23 @@ export default function SignUpPage() {
               <h3 className="text-lg font-semibold text-gray-800 border-b pb-2 mt-6">
                 Profile Picture
               </h3>
+
               <input
                 {...register("image", {
                   required: "Profile image is required",
+                  validate: {
+                    fileSize: (files) =>
+                      files?.[0]?.size <= 5 * 1024 * 1024 ||
+                      "Image size must be less than 5MB",
+
+                    fileType: (files) =>
+                      ["image/jpeg", "image/png", "image/webp"].includes(
+                        files?.[0]?.type,
+                      ) || "Only JPG, PNG, WEBP images are allowed",
+                  },
                 })}
                 type="file"
-                accept="image/*"
+                accept="image/jpeg,image/png,image/webp"
                 className="w-full border border-gray-200 rounded-xl px-4 py-3"
               />
 
