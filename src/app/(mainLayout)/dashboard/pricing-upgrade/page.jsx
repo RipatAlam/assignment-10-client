@@ -141,19 +141,23 @@ export default function pricingupgradePage() {
               </ul>
 
               <form action="/api/checkout_sessions" method="POST">
-                <section>
-                  <button
-                    type="submit"
-                    role="link"
-                    className={`w-full mt-10 py-3 rounded-xl font-semibold transition ${
-                      plan.featured
-                        ? "bg-blue-600 hover:bg-blue-700 text-white"
-                        : "bg-gray-100 hover:bg-gray-200"
-                    }`}
-                  >
-                    Checkout
-                  </button>
-                </section>
+                <input type="hidden" name="title" value={plan.name} />
+                <input
+                  type="hidden"
+                  name="price"
+                  value={Number(plan.price.replace("$", ""))}
+                />
+
+                <button
+                  type="submit"
+                  className={`w-full mt-10 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                    plan.featured
+                      ? "bg-blue-600 hover:bg-blue-700 text-white"
+                      : "bg-gray-100 hover:bg-gray-200 text-gray-900"
+                  }`}
+                >
+                  {plan.button}
+                </button>
               </form>
             </motion.div>
           ))}
