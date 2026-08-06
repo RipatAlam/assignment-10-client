@@ -21,8 +21,8 @@ export default function LessonDetails() {
   const [showFullStory, setShowFullStory] = useState(false);
 
   const router = useRouter();
-  const { data } = useSession();
-
+  const { data: session, isPending } = useSession();
+  
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
 
@@ -51,16 +51,16 @@ export default function LessonDetails() {
 
   //Like count korar jonno
   const handleLike = async () => {
-    if (!data?.user) {
+    if (!session?.user) {
       alert("Please login first");
       return;
     }
 
     try {
       const result = await likeLesson(lesson._id, {
-        userId: data.user.id,
-        userName: data.user.name,
-        userEmail: data.user.email,
+        userId: session.user.id,
+        userName: session.user.name,
+        userEmail: session.user.email,
       });
 
       if (result.success) {
@@ -78,7 +78,7 @@ export default function LessonDetails() {
 
   // Comment add korar jonno
   const handleComment = async () => {
-    if (!data?.user) {
+    if (!session?.user) {
       alert("Please login first");
       return;
     }
@@ -90,9 +90,9 @@ export default function LessonDetails() {
 
     try {
       const result = await addComment(lesson._id, {
-        userId: data.user.id,
-        userName: data.user.name,
-        userEmail: data.user.email,
+        userId: session.user.id,
+        userName: session.user.name,
+        userEmail: session.user.email,
         comment,
       });
 
@@ -126,7 +126,7 @@ export default function LessonDetails() {
     if (!confirmDelete) return;
 
     try {
-      const data = await deletePublicLesson(id);
+      const data = await deletePublicLesson(id, session?.user?.email);
 
       if (data.success && data.result.deletedCount > 0) {
         alert("Lesson deleted successfully");

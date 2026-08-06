@@ -15,12 +15,18 @@ import {
   Plus,
 } from "lucide-react";
 import { getPublicLessons, deletePublicLesson } from "@/lib/lessonServer";
+import { useSession } from "@/lib/auth-client";
 
 export default function MyLessonsPage() {
+
+  const { data: session } = useSession();
+
   const [lessons, setLessons] = useState([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
   const [loading, setLoading] = useState(true);
+
+  //console.log("story",lessons.story);
 
   useEffect(() => {
     const loadLessons = async () => {
@@ -45,7 +51,7 @@ export default function MyLessonsPage() {
     if (!confirmDelete) return;
 
     try {
-      const data = await deletePublicLesson(id);
+      const data = await deletePublicLesson(id, session?.user?.email);
 
       if (data.success && data.result.deletedCount > 0) {
         setLessons((prev) => prev.filter((item) => item._id !== id));
@@ -200,9 +206,11 @@ export default function MyLessonsPage() {
                         <div>
                           <h2 className="font-semibold">{lesson.title}</h2>
 
-                          <p className="text-sm text-gray-500 line-clamp-2">
-                            {lesson.story}
-                          </p>
+                          <div className="line-clamp-2">
+                            <p className="text-sm text-gray-500">
+                              {lesson.story}
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </td>

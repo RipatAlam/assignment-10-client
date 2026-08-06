@@ -9,8 +9,11 @@ import {
   publishLesson,
   unapproveLesson,
 } from "@/lib/lessonServer";
+import { useSession } from "@/lib/auth-client";
 
 export default function ManageLessons() {
+  const { data: session, isPending } = useSession();
+
   const [lessons, setLessons] = useState([]);
   const [filteredLessons, setFilteredLessons] = useState([]);
 
@@ -23,8 +26,11 @@ export default function ManageLessons() {
   const [showPending, setShowPending] = useState(false);
 
   const fetchLessons = async () => {
+    if (!session?.user?.email) return;
+
     try {
-      const data = await getAdminLessons();
+      const data = await getAdminLessons(session.user.email);
+      //console.log("Admin Lessons:", data);
 
       setLessons(data);
       setFilteredLessons(data);
@@ -36,8 +42,12 @@ export default function ManageLessons() {
   };
 
   useEffect(() => {
-    fetchLessons();
-  }, []);
+    if (isPending) return;
+
+    if (session?.user?.email) {
+      fetchLessons();
+    }
+  }, [session, isPending]);
 
   // Search + Filter
 
@@ -66,6 +76,9 @@ export default function ManageLessons() {
 
     await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons/${id}`, {
       method: "DELETE",
+      headers: {
+        email: session?.user?.email,
+      },
     });
 
     setLessons(lessons.filter((lesson) => lesson._id !== id));
@@ -73,11 +86,11 @@ export default function ManageLessons() {
 
   //HandleApprove
   const handleApprove = async (id) => {
-    console.log("Approve button clicked:", id);
+    //console.log("Approve button clicked:", id);
 
     try {
-      const result = await approveLesson(id);
-      console.log(result);
+      const result = await approveLesson(id, session?.user?.email);
+      //console.log(result);
 
       await fetchLessons();
     } catch (error) {
@@ -88,7 +101,7 @@ export default function ManageLessons() {
   //HandlePublish
   const handlePublish = async (id) => {
     try {
-      await publishLesson(id);
+      await publishLesson(id, session?.user?.email);
       await fetchLessons();
     } catch (error) {
       console.log(error);
@@ -98,7 +111,7 @@ export default function ManageLessons() {
   //HandleUnapprove
   const handleUnapprove = async (id) => {
     try {
-      await unapproveLesson(id);
+      await unapproveLesson(id, session?.user?.email);
       await fetchLessons();
     } catch (error) {
       console.log(error);

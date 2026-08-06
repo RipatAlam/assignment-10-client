@@ -112,11 +112,14 @@ export const addPublicLesson = async (lessonData) => {
 };
 
 //My Lessons Delete
-export const deletePublicLesson = async (id) => {
+export const deletePublicLesson = async (id, email) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons/${id}`,
     {
       method: "DELETE",
+      headers: {
+        email,
+      },
     },
   );
 
@@ -246,11 +249,14 @@ export const increaseLessonView = async (id) => {
 };
 
 // Approve Lesson
-export const approveLesson = async (id) => {
+export const approveLesson = async (id, email) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons/approve/${id}`,
     {
       method: "PATCH",
+      headers: {
+        email,
+      },
     },
   );
 
@@ -264,11 +270,14 @@ export const approveLesson = async (id) => {
 };
 
 //Unapprove lesson
-export const unapproveLesson = async (id) => {
+export const unapproveLesson = async (id, email) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons/unapprove/${id}`,
     {
       method: "PATCH",
+      headers: {
+        email,
+      },
     },
   );
 
@@ -282,11 +291,14 @@ export const unapproveLesson = async (id) => {
 };
 
 // Publish Lesson
-export const publishLesson = async (id) => {
+export const publishLesson = async (id, email) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/public-lessons/publish/${id}`,
     {
       method: "PATCH",
+      headers: {
+        email,
+      },
     },
   );
 
@@ -300,16 +312,23 @@ export const publishLesson = async (id) => {
 };
 
 // Admin - All Lessons
-export const getAdminLessons = async () => {
+export const getAdminLessons = async (email) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/admin/public-lessons`,
+    {
+      headers: {
+        email,
+      },
+    },
   );
 
+  const data = await res.json();
+
   if (!res.ok) {
-    throw new Error("Failed to fetch admin lessons");
+    throw new Error(data.message || "Failed to fetch admin lessons");
   }
 
-  return await res.json();
+  return data;
 };
 
 //< 1 2 3 4 5 > page

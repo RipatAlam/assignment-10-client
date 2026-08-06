@@ -344,46 +344,7 @@ export default function SignUpPage() {
               </div>
 
               {/* Account Type */}
-              <h3 className="text-lg font-semibold text-gray-800 border-b pb-2 mt-6">
-                Account Type
-              </h3>
-
-              <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mt-3 space-y-3">
-                <label className="flex items-center gap-3 cursor-pointer">
-                  <input
-                    {...register("role")}
-                    type="radio"
-                    value="user"
-                    defaultChecked
-                    className="w-4 h-4"
-                  />
-
-                  <div>
-                    <h4 className="font-semibold text-gray-800">User</h4>
-
-                    <p className="text-sm text-gray-500">
-                      Share lessons, read stories and join the community.
-                    </p>
-                  </div>
-                </label>
-
-                <label className="flex items-center gap-3 cursor-pointer">
-                  <input
-                    {...register("role")}
-                    type="radio"
-                    value="admin"
-                    className="w-4 h-4"
-                  />
-
-                  <div>
-                    <h4 className="font-semibold text-gray-800">Admin</h4>
-
-                    <p className="text-sm text-gray-500">
-                      Manage users, lessons and website content.
-                    </p>
-                  </div>
-                </label>
-              </div>
+              
               {/* ✅ NEW: Role selection */}
 
               <div className="flex items-start gap-3">

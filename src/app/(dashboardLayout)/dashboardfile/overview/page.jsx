@@ -44,7 +44,7 @@ export default function OverviewPage() {
     const loadLessonStats = async () => {
       const data = await getPaginatedPublicLessons();
 
-      console.log(data, "ViewSection");
+      //console.log(data, "ViewSection");
 
       if (data?.lessons) {
         // Total Lessons

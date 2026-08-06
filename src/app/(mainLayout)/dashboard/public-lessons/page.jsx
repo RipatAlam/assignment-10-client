@@ -27,7 +27,7 @@ export default function PublicLessons() {
       try {
         const result = await getPaginatedPublicLessons(page, data?.user?.id);
 
-        console.log(result);
+        //console.log(result);
 
         setPublicLessonsData(result.lessons || []);
         setTotalPages(result.totalPages || 1);

@@ -35,8 +35,8 @@ export default function AddLessonPage() {
   const { data } = useSession();
 
   const user = data?.user;
-  console.log(data);
-  console.log(data?.user);
+  //console.log(data);
+  //console.log(data?.user);
 
   const handleImagePreview = (e) => {
     const file = e.target.files[0];
