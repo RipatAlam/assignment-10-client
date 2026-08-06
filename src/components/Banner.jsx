@@ -61,154 +61,156 @@ const stagger = {
 
 export default function BannerPage() {
   return (
-    <section
-      className="relative max-w-7xl mx-auto h-[90vh] bg-no-repeat overflow-hidden"
-      style={{
-        backgroundImage: "url('/Images/BannerImage.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "73% center",
-      }}
-    >
-      {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/55"></div>
+    <section className="bg-[#07111f] relative w-full overflow-hidden">
+      <div
+        className="bg-[#07111f] relative max-w-7xl mx-auto h-[90vh] bg-no-repeat overflow-hidden"
+        style={{
+          backgroundImage: "url('/Images/BannerImage.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "73% center",
+        }}
+      >
+        {/* Dark Overlay */}
+        <div className="absolute inset-0 bg-black/55"></div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 sm:px-8 md:px-60 lg:px-25 w-full h-full flex items-center">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left Side */}
-          <motion.div variants={stagger} initial="hidden" animate="visible">
-            <motion.span
-              variants={fadeUp}
-              className="inline-block px-4 py-2 rounded-full bg-white/10 text-white text-sm mb-6 backdrop-blur"
-            >
-              ✨ Learn. Share. Grow.
-            </motion.span>
+        <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 sm:px-8 md:px-60 lg:px-25 w-full h-full flex items-center">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left Side */}
+            <motion.div variants={stagger} initial="hidden" animate="visible">
+              <motion.span
+                variants={fadeUp}
+                className="inline-block px-4 py-2 rounded-full bg-white/10 text-white text-sm mb-6 backdrop-blur"
+              >
+                ✨ Learn. Share. Grow.
+              </motion.span>
 
-            <motion.h1
-              variants={fadeLeft}
-              className="text-5xl font-serif md:text-5xl xl:text-5xl font-bold leading-tight text-white"
-            >
-              Every Experience
-              <br />
-              Teaches
-              <br />
-              <span className="text-blue-400">Something Valuable.</span>
-            </motion.h1>
-
-            <motion.p
-              variants={fadeUp}
-              className="mt-6 text-gray-300 font-serif text-lg max-w-lg"
-            >
-              Read inspiring life lessons shared by people around the world.
-              Learn from their experiences and share your own story to help
-              others grow.
-            </motion.p>
-
-            <motion.div variants={fadeUp} className="flex gap-4 mt-10">
-              <Link href="/dashboard/public-lessons">
-                <motion.button
-                  whileHover={{ scale: 1.05, y: -3 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-blue-600 font-serif hover:bg-blue-700 transition px-8 py-4 rounded-xl text-white font-semibold"
-                >
-                  Explore Lessons →
-                </motion.button>
-              </Link>
-
-              <Link href="/dashboard/add-lesson">
-                <motion.button
-                  whileHover={{ scale: 1.05, y: -3 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-blue-600 font-serif hover:bg-blue-700 transition px-8 py-4 rounded-xl text-white font-semibold"
-                >
-                  Share Your Lesson
-                </motion.button>
-              </Link>
-            </motion.div>
-
-            {/* Avatar Section */}
-
-            <motion.div
-              variants={fadeUp}
-              className="flex items-center gap-4 mt-10"
-            >
-              <div className="flex -space-x-3">
-                <img
-                  src="https://i.pravatar.cc/50?img=1"
-                  className="w-10 h-10 rounded-full border-2 border-white"
-                />
-                <img
-                  src="https://i.pravatar.cc/50?img=2"
-                  className="w-10 h-10 rounded-full border-2 border-white"
-                />
-                <img
-                  src="https://i.pravatar.cc/50?img=3"
-                  className="w-10 h-10 rounded-full border-2 border-white"
-                />
-                <img
-                  src="https://i.pravatar.cc/50?img=4"
-                  className="w-10 h-10 rounded-full border-2 border-white"
-                />
-              </div>
-
-              <p className="text-gray-300 font-serif">
-                Trusted by{" "}
-                <span className="text-white font-semibold">10,000+</span>
+              <motion.h1
+                variants={fadeLeft}
+                className="text-5xl font-serif md:text-5xl xl:text-5xl font-bold leading-tight text-white"
+              >
+                Every Experience
                 <br />
-                learners worldwide
-              </p>
+                Teaches
+                <br />
+                <span className="text-blue-400">Something Valuable.</span>
+              </motion.h1>
+
+              <motion.p
+                variants={fadeUp}
+                className="mt-6 text-gray-300 font-serif text-lg max-w-lg"
+              >
+                Read inspiring life lessons shared by people around the world.
+                Learn from their experiences and share your own story to help
+                others grow.
+              </motion.p>
+
+              <motion.div variants={fadeUp} className="flex gap-4 mt-10">
+                <Link href="/dashboard/public-lessons">
+                  <motion.button
+                    whileHover={{ scale: 1.05, y: -3 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="bg-blue-600 font-serif hover:bg-blue-700 transition px-8 py-4 rounded-xl text-white font-semibold"
+                  >
+                    Explore Lessons →
+                  </motion.button>
+                </Link>
+
+                <Link href="/dashboard/add-lesson">
+                  <motion.button
+                    whileHover={{ scale: 1.05, y: -3 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="bg-blue-600 font-serif hover:bg-blue-700 transition px-8 py-4 rounded-xl text-white font-semibold"
+                  >
+                    Share Your Lesson
+                  </motion.button>
+                </Link>
+              </motion.div>
+
+              {/* Avatar Section */}
+
+              <motion.div
+                variants={fadeUp}
+                className="flex items-center gap-4 mt-10"
+              >
+                <div className="flex -space-x-3">
+                  <img
+                    src="https://i.pravatar.cc/50?img=1"
+                    className="w-10 h-10 rounded-full border-2 border-white"
+                  />
+                  <img
+                    src="https://i.pravatar.cc/50?img=2"
+                    className="w-10 h-10 rounded-full border-2 border-white"
+                  />
+                  <img
+                    src="https://i.pravatar.cc/50?img=3"
+                    className="w-10 h-10 rounded-full border-2 border-white"
+                  />
+                  <img
+                    src="https://i.pravatar.cc/50?img=4"
+                    className="w-10 h-10 rounded-full border-2 border-white"
+                  />
+                </div>
+
+                <p className="text-gray-300 font-serif">
+                  Trusted by{" "}
+                  <span className="text-white font-semibold">10,000+</span>
+                  <br />
+                  learners worldwide
+                </p>
+              </motion.div>
             </motion.div>
-          </motion.div>
 
-          {/* Right Side */}
-          <motion.div
-            variants={fadeRight}
-            initial="hidden"
-            animate="visible"
-            className="relative h-[650px] hidden lg:flex items-center justify-center"
-          >
-            {/* Circle */}
-            <div className="absolute w-[550px] h-[550px] rounded-full border border-purple-400/30"></div>
+            {/* Right Side */}
+            <motion.div
+              variants={fadeRight}
+              initial="hidden"
+              animate="visible"
+              className="relative h-[650px] hidden lg:flex items-center justify-center"
+            >
+              {/* Circle */}
+              <div className="absolute w-[550px] h-[550px] rounded-full border border-purple-400/30"></div>
 
-            {/* Top */}
-            <Card
-              title="Mindset"
-              lessons="12.4K Lessons"
-              icon={Brain}
-              className="top-6 left-1/2 -translate-x-1/2 animate-float"
-            />
+              {/* Top */}
+              <Card
+                title="Mindset"
+                lessons="12.4K Lessons"
+                icon={Brain}
+                className="top-6 left-1/2 -translate-x-1/2 animate-float"
+              />
 
-            {/* Left */}
-            <Card
-              title="Relationships"
-              lessons="8.7K Lessons"
-              icon={Heart}
-              className="top-45 left-[-50px] animate-float2"
-            />
+              {/* Left */}
+              <Card
+                title="Relationships"
+                lessons="8.7K Lessons"
+                icon={Heart}
+                className="top-45 left-[-50px] animate-float2"
+              />
 
-            {/* Bottom Left */}
-            <Card
-              title="Health"
-              lessons="6.2K Lessons"
-              icon={Activity}
-              className="bottom-30 left-1 animate-float"
-            />
+              {/* Bottom Left */}
+              <Card
+                title="Health"
+                lessons="6.2K Lessons"
+                icon={Activity}
+                className="bottom-30 left-1 animate-float"
+              />
 
-            {/* Right */}
-            <Card
-              title="Career"
-              lessons="9.3K Lessons"
-              icon={Briefcase}
-              className="top-45 right-[-50px] animate-float2"
-            />
+              {/* Right */}
+              <Card
+                title="Career"
+                lessons="9.3K Lessons"
+                icon={Briefcase}
+                className="top-45 right-[-50px] animate-float2"
+              />
 
-            {/* Bottom Right */}
-            <Card
-              title="Finance"
-              lessons="7.7K Lessons"
-              icon={Wallet}
-              className="bottom-30 right-1 animate-float"
-            />
-          </motion.div>
+              {/* Bottom Right */}
+              <Card
+                title="Finance"
+                lessons="7.7K Lessons"
+                icon={Wallet}
+                className="bottom-30 right-1 animate-float"
+              />
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>

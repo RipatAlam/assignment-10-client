@@ -47,8 +47,8 @@ export default function Navbar({ user, plan = "free" }) {
   };
 
   return (
-    <header className="w-full relative z-50">
-      <div className="max-w-7xl mx-auto border-b border-[#0d1728] bg-[#07111f] shadow-lg">
+    <header className="bg-[#07111f] w-full relative z-50">
+      <div className="max-w-7xl mx-auto border-b border-[#0d1728] shadow-lg">
         <div className="flex items-center justify-between py-4 px-6">
           {/* Logo */}
           <motion.div
