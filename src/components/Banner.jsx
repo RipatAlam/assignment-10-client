@@ -61,7 +61,7 @@ const stagger = {
 
 export default function BannerPage() {
   return (
-    <section className="bg-[#07111f] relative w-full overflow-hidden">
+    <section className="bg-[#00040B] relative w-full overflow-hidden">
       <div
         className="bg-[#07111f] relative max-w-7xl mx-auto h-[90vh] bg-no-repeat overflow-hidden"
         style={{
